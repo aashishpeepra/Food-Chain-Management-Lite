@@ -1,8 +1,10 @@
 *{
-  margin:auto;
-  padding:auto;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 body{
   text-align: center;
   font-family: sans-serif;
+  font-size: 62.5%;
 }

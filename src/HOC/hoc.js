@@ -1,12 +1,43 @@
-import React from 'react';
+import React from "react";
+import "./hoc.css";
 
-export default class Hoc extends React.Component{
-    state={
+import SideDrawer from "../Components/SideDrawer/SideDrawer";
+import Backdrop from "../Components/Backdrop/Backdrop";
 
+export default class Aux extends React.Component {
+    state = {
+        SideDrawerOpen: true,
+    };
+
+
+    backdropClickHandler = () => {
+        this.setState({ SideDrawerOpen: false });
+    };
+    toggleDrawer=()=>{
+        this.setState({SideDrawerOpen:!this.state.SideDrawerOpen})
     }
-    render(){
+    render() {
+        let backdrop;
+        if (this.state.SideDrawerOpen) {
+            backdrop = <Backdrop clicked={this.backdropClickHandler} />;
+        }
         return (
-            this.props.children
-        )
+            <main>
+                {
+                    !this.state.SideDrawerOpen ? (
+
+                        <div className="burger" onClick={this.toggleDrawer}>
+                            <div className="each-burger"></div>
+                            <div className="each-burger"></div>
+                            <div className="each-burger"></div>
+                        </div>
+                    ) : null
+                }
+                <SideDrawer show={this.state.SideDrawerOpen} />
+                {backdrop}
+                {this.props.children}
+
+            </main>
+        );
     }
 }
