@@ -1,7 +1,7 @@
 .Available-Each-Block{
     background-color: #fff;
-    height:115px;
-    width:140px;
+    min-height:115px;
+    min-width:140px;
     display:flex;
     flex-direction: column;
     align-items: center;
