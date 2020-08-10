@@ -1,7 +1,6 @@
 import React from "react";
 import "../../../Styles/basicStyle.css";
 
-
 class ReturnFromHub extends React.Component {
   state = {
     productName: "Chicken Medium Curry Cut Skin Less",
@@ -31,7 +30,7 @@ class ReturnFromHub extends React.Component {
 
   render() {
     return (
-        <section>
+      <section>
         <h1 className="form__heading">Return From Hub</h1>
         <div className="input__field--div">
           <label for="input__field" className="input__field--label">
@@ -59,19 +58,19 @@ class ReturnFromHub extends React.Component {
           <label for="input__field" className="input__field--label">
             QNTY
           </label>
-          <input type="text" id="input__field product__qty" required/>
+          <input type="text" id="input__field product__qty" required />
         </div>
         <div className="input__field--div">
           <label for="input__field--label" className="input__field--label">
             Weight
           </label>
-          <input type="text" id="input__field product__wg" required/>
+          <input type="text" id="input__field product__wg" required />
         </div>
         <div className="input__field--div">
           <label for="input__field--label" className="input__field--label">
             Return Date
           </label>
-          <input type="text" id="input__field return__date" required/>
+          <input type="text" id="input__field return__date" required />
         </div>
         <div className="textarea__field--div">
           <label for="input__field--label" className="input__field--label">
@@ -82,7 +81,7 @@ class ReturnFromHub extends React.Component {
         <button type="submit" onClick={this.called}>
           SUBMIT
         </button>
-        </section>
+      </section>
     );
   }
 }

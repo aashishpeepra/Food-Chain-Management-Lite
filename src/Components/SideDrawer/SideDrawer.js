@@ -1,6 +1,7 @@
 import React from "react";
 import "./SideDrawer.css";
 import { NavLink } from "react-router-dom";
+import "../../Styles/basicStyle.css";
 import { logout } from "../../firebase";
 
 const sideDrawer = (props) => {
