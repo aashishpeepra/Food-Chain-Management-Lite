@@ -1,6 +1,6 @@
 import React from 'react';
 import TopInfo from "../../../Components/TopInfo/TopInfo";
-import "./StockAvailable";
+import "./StockAvailable.css";
 
 class StockAvailable extends React.Component{
     state={

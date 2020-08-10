@@ -1,5 +1,6 @@
 import React from 'react';
 import "./TopInfo.css";
+import DatePicker from "../DatePicker"
 
 export default class TopInfo extends React.Component{
     state={
@@ -15,6 +16,10 @@ export default class TopInfo extends React.Component{
                 <div className="information-box green">
                     <p>Hub incharge: Elaya</p>
                 </div>
+                <div >
+                <DatePicker date={new Date().getTime()}/>
+                </div>
+                
             </section>
         )
     }
