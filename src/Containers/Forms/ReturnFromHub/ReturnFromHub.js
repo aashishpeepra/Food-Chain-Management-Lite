@@ -1,8 +1,17 @@
 import React from 'react';
 
-class Dashboard extends React.Component{
+class ReturnFromHub extends React.Component{
     state={
-
+        returnDate:new Date().getTime(),
+        reason:"Reason why to return",
+        data:[
+            {
+                category:"veg",
+                name:"nameOfProduct",
+                uom:1, //  We will use key value pairs to match UOM,
+                qty:2 // quantity
+            }
+        ]
     }
     render(){
         return(
@@ -11,4 +20,4 @@ class Dashboard extends React.Component{
     }
 }
 
-export default Dashboard;
+export default ReturnFromHub;

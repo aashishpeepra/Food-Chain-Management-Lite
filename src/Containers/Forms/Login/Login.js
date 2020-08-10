@@ -1,8 +1,9 @@
 import React from 'react';
 
-class Dashboard extends React.Component{
+class Login extends React.Component{
     state={
-
+        email:"",
+        password:""
     }
     render(){
         return(
@@ -11,4 +12,4 @@ class Dashboard extends React.Component{
     }
 }
 
-export default Dashboard;
+export default Login;

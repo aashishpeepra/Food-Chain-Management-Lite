@@ -1,8 +1,15 @@
 import React from 'react';
 
-class Dashboard extends React.Component{
+class SalesEntry extends React.Component{
     state={
-
+        data:[
+            {
+                name:"",
+                uom:1,
+                qty:2
+            }
+        ],
+        date:new Date().getTime(),
     }
     render(){
         return(
@@ -11,4 +18,4 @@ class Dashboard extends React.Component{
     }
 }
 
-export default Dashboard;
+export default SalesEntry;

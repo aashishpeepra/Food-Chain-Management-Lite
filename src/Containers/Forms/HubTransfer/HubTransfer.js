@@ -1,6 +1,6 @@
 import React from 'react';
 
-class Dashboard extends React.Component{
+class HubTransfer extends React.Component{
     state={
 
     }
@@ -11,4 +11,4 @@ class Dashboard extends React.Component{
     }
 }
 
-export default Dashboard;
+export default HubTransfer;

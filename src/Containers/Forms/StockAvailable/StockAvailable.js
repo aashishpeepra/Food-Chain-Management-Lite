@@ -1,14 +1,16 @@
 import React from 'react';
 
-class Dashboard extends React.Component{
+class StockAvailable extends React.Component{
     state={
-
+        // Data will come from backend
     }
     render(){
         return(
-            <h1>STOCK AVAILABLE</h1>
+            <section id="Stock Available" className="StockAvailable">
+                
+            </section>
         )
     }
 }
 
-export default Dashboard;
+export default StockAvailable;
