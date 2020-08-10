@@ -1,0 +1,19 @@
+.outlet-info{
+    display:flex;
+
+}
+.information-box{
+    padding:10px 20px;
+    margin:0px 20px;
+    color:#fff;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.purple{
+    background-color:#2c92f8;
+    
+}
+.green{
+    background-color:#00ff0d;
+}
