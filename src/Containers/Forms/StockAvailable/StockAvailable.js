@@ -1,7 +1,7 @@
 import React from 'react';
 import TopInfo from "../../../Components/TopInfo/TopInfo";
 import "./StockAvailable.css";
-
+import Category from "../../../Components/UI/Blocks/OuterBlock/OuterBlock";
 class StockAvailable extends React.Component{
     state={
         data:[
@@ -23,8 +23,16 @@ class StockAvailable extends React.Component{
     render(){
         return(
             <section id="Stock Available" className="StockAvailable">
-            
-                <TopInfo/>
+            <div>
+            <TopInfo/>
+            </div>
+            <div>
+                <Category/>
+                <Category/>
+                <Category/>
+                <Category/>
+            </div>
+                
             </section>
         )
     }

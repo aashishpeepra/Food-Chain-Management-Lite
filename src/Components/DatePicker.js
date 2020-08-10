@@ -15,6 +15,7 @@ export default class Example extends React.Component {
     this.setState({
       startDate: date
     });
+    // let temp=this.cb!=undefined?cb(this.state.startDate):null;
   };
    ExampleCustomInput = ({ value, onClick }) => (
     <button className="example-custom-input" onClick={onClick}>
