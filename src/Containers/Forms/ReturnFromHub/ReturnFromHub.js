@@ -1,5 +1,4 @@
 import React from "react";
-import FormWrapper from "../../../HOC/formWrapper";
 import "../../../Styles/basicStyle.css";
 
 
@@ -32,7 +31,7 @@ class ReturnFromHub extends React.Component {
 
   render() {
     return (
-      <FormWrapper>
+        <section>
         <h1 className="form__heading">Return From Hub</h1>
         <div className="input__field--div">
           <label for="input__field" className="input__field--label">
@@ -83,7 +82,7 @@ class ReturnFromHub extends React.Component {
         <button type="submit" onClick={this.called}>
           SUBMIT
         </button>
-      </FormWrapper>
+        </section>
     );
   }
 }
