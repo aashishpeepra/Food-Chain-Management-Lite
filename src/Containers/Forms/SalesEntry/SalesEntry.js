@@ -62,6 +62,9 @@ class SalesEntry extends React.Component {
                 <div>
                     <Button value="Add Item" func={this.addNewToData}/>
                 </div>
+                <div style={{marginTop:"20px"}}>
+                    <Button value="Submit" func={()=>{}} />
+                </div>
             </section>
         )
     }

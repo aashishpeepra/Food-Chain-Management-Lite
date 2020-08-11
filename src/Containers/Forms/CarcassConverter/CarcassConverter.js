@@ -110,7 +110,7 @@ class Dashboard extends React.Component {
                         </select>
                     </div>
                     <div className="Carcass-converter-option-div">
-                        <h3>Choose Category</h3>
+                        <h3>Original Weight</h3>
                         <input onChange={(e)=>{this.setState({total:e.target.value})}} value={this.state.total} type="text" id="weight" name="weight" placeholder="Enter Weight"/>
                     </div>
                 </div>
