@@ -1,0 +1,13 @@
+.btn{
+    border:0px;
+    background-color:#2c92f8;
+    color:#fff;
+    border-radius: 0px;;
+    padding: 10px 2px !important;
+    font-weight: 600;
+    letter-spacing: 1px;;
+    font-size: 100%;
+}
+.btn:focus{
+    outline: none;
+}

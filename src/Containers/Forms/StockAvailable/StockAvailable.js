@@ -12,13 +12,15 @@ class StockAvailable extends React.Component{
                             
                             product:"second",
                             uom:1,
-                            qty:32
+                            qty:32,
+                            packing:"vacuum"
                         },
                         {
                             
                             product:"second",
                             uom:1,
-                            qty:32
+                            qty:32,
+                            packing:"vacuum"
                         }
                     ],
                     second:[
@@ -26,13 +28,15 @@ class StockAvailable extends React.Component{
                             
                             product:"second",
                             uom:1,
-                            qty:32
+                            qty:32,
+                            packing:"vacuum"
                         },
                         {
                             
                             product:"second",
                             uom:1,
-                            qty:32
+                            qty:32,
+                            packing:"vacuum"
                         }
                     ],
                 }
@@ -44,13 +48,15 @@ class StockAvailable extends React.Component{
                             
                             product:"second",
                             uom:1,
-                            qty:32
+                            qty:32,
+                            packing:"vacuum"
                         },
                         {
                             
                             product:"second",
                             uom:1,
-                            qty:32
+                            qty:32,
+                            packing:"vacuum"
                         }
                     ],
                     second:[
@@ -58,19 +64,22 @@ class StockAvailable extends React.Component{
                             
                             product:"second",
                             uom:1,
-                            qty:32
+                            qty:32,
+                            packing:"vacuum"
                         },
                         {
                             
                             product:"second",
                             uom:1,
-                            qty:32
+                            qty:32,
+                            packing:"vacuum"
                         },
                         {
                             
                             product:"second",
                             uom:1,
-                            qty:39
+                            qty:39,
+                            packing:"vacuum"
                         }
                     ],
                 }
