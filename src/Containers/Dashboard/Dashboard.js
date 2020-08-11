@@ -25,7 +25,7 @@ class Dashboard extends React.Component {
           </div>
           <div
             className="lower__section"
-            style={{ position: "relative", height: "40vh", width: "80vw" }}
+            style={{ position: "relative", height: "100%", width: "80vw" }}
           >
             <div className="left__section">
               <PieChart data={this.state.data} />
