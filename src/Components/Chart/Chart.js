@@ -1,4 +1,5 @@
 import React from "react";
+import "./Chart.css";
 import { Doughnut } from "react-chartjs-2";
 
 class Chart extends React.Component {
@@ -28,6 +29,7 @@ class Chart extends React.Component {
           cutoutPercentage: 70,
           tooltips: {enabled: false},
           hover: {mode: null},
+          maintainAspectRatio: false,
         }} />
       </div>
     );
