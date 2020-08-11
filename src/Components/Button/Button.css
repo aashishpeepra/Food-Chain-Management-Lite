@@ -1,0 +1,15 @@
+.btnMy{
+    border:0px;
+    background-color:#2c92f8;
+    color:#fff;
+    border-radius: 0px;;
+    padding: 10px 10px ;
+    font-weight: 600;
+    box-sizing: content-box;
+    letter-spacing: 1px;
+    font-size: 100%;
+    min-width:100px;
+}
+.btnMy:focus{
+    outline: none;
+}

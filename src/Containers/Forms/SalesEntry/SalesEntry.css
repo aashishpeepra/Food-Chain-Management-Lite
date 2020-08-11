@@ -1,0 +1,17 @@
+.sales-entry-each-row{
+    display:flex;
+    justify-content: center;
+}
+.sales-entry-each-row select, .sales-entry-each-row input{
+    margin:10px 20px;min-width:100px;
+}
+.sales-entry-each-row input{
+    max-width:100px;
+}
+.sales-entry-top{
+    margin:30px 0px;
+}
+.Sales_Entry{
+    min-width:500px;
+    overflow-x: auto;
+}

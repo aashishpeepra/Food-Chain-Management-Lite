@@ -1,0 +1,39 @@
+.Carcass-converter-option{
+    margin:20px 0px;
+    display: flex;
+    justify-content: center;
+}
+.Carcass-converter-option select,.Carcass-converter-option input{
+    margin-top:20px;
+    height:30px;
+    width:auto;
+    
+}
+.Carcass-converter-option-div{
+    margin-right:20px;
+}
+.form-generator{
+    margin-top:20px;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+.form-generator input{
+    max-width: 200px;
+}
+.form-generator p,.form-generator input{
+    margin:0px 40px;
+}
+.form-generator p{
+    min-width:162px;
+    text-align: left;
+}
+.Carcass-Generated-Form{
+    display:flex;
+    align-items: initial;
+    justify-content: center;
+    flex-direction: column;
+}
+.Carcass-button-holder{
+    margin-top:20px;
+}
