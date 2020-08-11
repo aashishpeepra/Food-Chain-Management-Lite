@@ -1,3 +1,12 @@
 .StockAvailable{
-   
+   margin:auto;
+}
+.StockAvailable-select{
+    margin:20px;
+    display:inline-flex;
+    flex-direction: column;
+}
+.StockAvailable-select select{
+    margin-top:10px;
+    height:25px;
 }

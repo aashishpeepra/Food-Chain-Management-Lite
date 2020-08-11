@@ -1,0 +1,19 @@
+.Available-Category-Block-Items{
+    display:flex;
+}
+.Available-Category-Block-Head{
+    text-align: left;
+    margin-left:20px;
+    margin-bottom:20px;
+    display:flex;
+    align-items: center;
+}
+.Available-Category-Block-Head span{
+    margin-left:20px;
+    color:rgb(134, 132, 132);
+    font-size: 120%;;
+    font-weight: 600;
+}
+.Available-Category-Block{
+    margin:40px;
+}

@@ -6,7 +6,7 @@ import Backdrop from "../Components/Backdrop/Backdrop";
 
 export default class Aux extends React.Component {
     state = {
-        SideDrawerOpen: true,
+        SideDrawerOpen: false,
     };
 
 
@@ -24,7 +24,7 @@ export default class Aux extends React.Component {
         return (
             <main>
                 {
-                    !this.state.SideDrawerOpen ? (
+                    true ? (
 
                         <div className="burger" onClick={this.toggleDrawer}>
                             <div className="each-burger"></div>

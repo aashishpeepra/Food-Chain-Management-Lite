@@ -1,10 +1,13 @@
 .outlet-info{
     display:flex;
-
+    align-items: center;
+    flex-wrap:wrap ;
+    justify-content: center;
 }
 .information-box{
     padding:10px 20px;
-    margin:0px 20px;
+    margin:5px 20px;
+    min-width:230px;
     color:#fff;
     font-weight: 700;
     letter-spacing: 1px;
@@ -15,5 +18,16 @@
     
 }
 .green{
-    background-color:#00ff0d;
+    background-color:#2c92f8;
+}
+.react-datepicker-wrapper,
+.react-datepicker__input-container,
+.react-datepicker__input-container input {
+    box-sizing: content-box;
+    padding:5px 10px;
+    text-align: center;
+    color:rgb(167, 167, 167);
+    font-weight: 600;
+    font-size:100%;
+    cursor: pointer;
 }
