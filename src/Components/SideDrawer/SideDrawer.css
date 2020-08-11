@@ -104,6 +104,6 @@
     display: visible;
   }
 }
-.active{
+.Options__Home .active,.Options__Cart .active{
   color:#0080ff
 }
