@@ -1,12 +1,11 @@
 import React from "react";
 import ReturnHubRow from "../../../Components/ReturnHubRow/ReturnHubRow";
-import "../../../Styles/basicStyle.css";
+import "./ReturnFromHub.css";
 
 class ReturnFromHub extends React.Component {
   state = {
     rows: [<ReturnHubRow key="0" />],
     returnDate: null,
-    reasonForReturn: null,
     data: [],
   };
 
@@ -39,9 +38,11 @@ class ReturnFromHub extends React.Component {
     let quantityValues = [];
     quantityArray.forEach(each => quantityValues.push(each.value));
 
+    let reasonArray = document.querySelectorAll(".input__reason");
+    let reasonValues = [];
+    reasonArray.forEach(each => reasonValues.push(each.value));
+
     let returnDate = document.getElementById('input__field return__date').value || null;
-    
-    let reasonForReturn = document.getElementById('input__field return__reason').value || null;
 
     for(let i=0; i<categoryNameArray.length; i++) {
       dataArray.push({
@@ -49,13 +50,13 @@ class ReturnFromHub extends React.Component {
         subCategory: subCategoryNames[i],
         UOM: UOMs[i],
         quantity: quantityValues[i],
+        reason: reasonValues[i],
       });
     }
 
     this.setState({
       data: dataArray,
       returnDate: returnDate,
-      reasonForReturn: reasonForReturn,
     });
 
     console.log(this.state);
@@ -64,25 +65,19 @@ class ReturnFromHub extends React.Component {
 
   render() {
     return (
-      <section>
+      <section id="return__from__hub">
         <h1 className="form__heading">Return From Hub</h1>
         {this.state.rows.map(function (each, index) {
           return each;
         })}
-        <p onClick={this.addReturnHubRow}>Add One</p>
-        <div className="input__field--div">
-          <label for="input__field--label" className="input__field--label">
+        <p onClick={this.addReturnHubRow} className="return__add">Add More</p>
+        <div className="return__date__input--div">
+          <label for="input__field--label" className="return__field--label">
             Return Date
           </label>
-          <input type="text" id="input__field return__date" required />
+          <input type="text" id="input__field return__date" className="return__date__input" required />
         </div>
-        <div className="textarea__field--div">
-          <label for="input__field--label" className="input__field--label">
-            Reason for return
-          </label>
-          <textarea id="input__field return__reason" col="50" rows="5" />
-        </div>
-        <button type="submit" onClick={this.called}>
+        <button type="submit" onClick={this.called} className="return__submit">
           SUBMIT
         </button>
       </section>

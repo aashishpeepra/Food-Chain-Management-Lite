@@ -19,7 +19,7 @@ export default class ReturnHubRow extends Component {
   render() {
     return (
       <div className="row__container">
-        <div className="input__field--div">
+        <div className="row__container--item">
           <select
             name="category"
             id="category-name"
@@ -31,7 +31,7 @@ export default class ReturnHubRow extends Component {
             ))}
           </select>
         </div>
-        <div className="input__field--div">
+        <div className="row__container--item">
           <select
             name="sub-category"
             id="sub-category-name"
@@ -42,7 +42,7 @@ export default class ReturnHubRow extends Component {
             ))}
           </select>
         </div>
-        <div className="input__field--div">
+        <div className="row__container--item">
           <input
             type="text"
             id="input__field product__UOM"
@@ -51,12 +51,21 @@ export default class ReturnHubRow extends Component {
             required
           />
         </div>
-        <div className="input__field--div">
+        <div className="row__container--item">
           <input
             type="text"
             id="input__field product__QTY"
             className="input__QTY"
             placeholder="QTY"
+            required
+          />
+        </div>
+        <div className="row__container--item">
+          <input
+            type="text"
+            id="input__field product__reason"
+            className="input__reason"
+            placeholder="Reason For Return"
             required
           />
         </div>

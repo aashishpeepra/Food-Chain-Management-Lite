@@ -1,6 +1,54 @@
 .row__container {
-    width: 100vw;
+    width: 80%;
+    margin: auto;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-items: center;
+    margin-bottom: 10px;
+}
+
+@media only screen and (max-width: 800px) {
+    .row__container {
+        width: 99%;
+    }
+}
+
+.row__container--item {
+    width: 30%;
+}
+
+.row__container--item > select {
+    width: 80%;
+    padding: 3px 10px;
+    border: 1px solid #0080ff;
+}
+
+.input__UOM,
+.input__QTY {
+    width: 50%;
+    padding: 3px 10px;
+    outline: none;
+    border: 1px solid #0080ff;
+}
+
+@media (max-width: 800px) {
+    .row__container {
+        overflow-x: scroll;
+    }
+
+    .row__container--item > select {
+        width: 70%;
+    }
+
+    .input__UOM,
+    .input__QTY {
+        width: 75%;
+    }
+}
+
+.input__reason {
+    width: 100%;
+    padding: 3px 3px;
+    outline: none;
+    border: 1px solid #0080ff;
 }
