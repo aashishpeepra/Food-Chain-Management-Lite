@@ -52,3 +52,8 @@
       border: 1px solid black;
       cursor: pointer;
   }
+
+  .active {
+    color: chartreuse;
+    background-color: black;
+  }
