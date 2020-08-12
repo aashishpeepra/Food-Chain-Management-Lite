@@ -2,17 +2,18 @@ import React from 'react';
 import TopInfo from "../../../Components/TopInfo/TopInfo";
 import "./SalesEntry.css";
 import Button from "../../../Components/Button/Button";
+import {db} from "../../../firebase";
 function eachRow(data,currentKey,value,selectChange) {
     data=data.data;
     const keys=Object.keys(data);
     console.log(data,keys,currentKey,data[currentKey]);
     return (
-        <div className="sales-entry-each-row">
+        <div className="sales-entry-each-row" key={Math.random()}>
             <select name="category" onChange={selectChange}>
                 {keys.map(each=><option value={each} key={each}>{each}</option>)}
             </select>
             <select name="product"  onChange={selectChange}>
-                {data[currentKey].map(each=><option value={each} key={each}>{each}</option>)}
+                {data[currentKey].map(each=><option value={each} key={each+Math.random()}>{each}</option>)}
             </select>
 
             <select name="uom" onChange={selectChange}>
@@ -41,7 +42,7 @@ class SalesEntry extends React.Component {
     }
     addNewToData=()=>{
         let copy=[...this.state.data];
-        copy.push({category:"first",product:"",uom:1,qty:0});
+        copy.push({category:"first",product:"first",uom:1,qty:0});
         this.setState({data:copy});
     }
     setSelectValue=(e,index)=>{
@@ -49,11 +50,55 @@ class SalesEntry extends React.Component {
         copy[index][e.target.name]=e.target.value;
         this.setState({data:copy});
     }
+    fetchFromFirebase = (collection, doc, cb) => {
+        db.collection(collection).doc(doc).get().then(data => {
+            console.log(data.data());
+            cb(data.data());
+        })
+            .catch(err => {
+                console.log('error while fetching', err);
+            })
+    }
+    converArrayIntoObjectClassify = (data) => {
+        let result = {};
+        let data2 = [...data];
+        data2.forEach(element => {
+            let key = element["category"];
+            delete element["category"];
+            if(result[key]===undefined)
+                result[key]=[element]
+            else
+                result[key].push( element);
+        });
+        console.log(result);
+        return result;
+    }
+    upDateToFirebase = () => {
+        console.log("hERE")
+        this.fetchFromFirebase("entry","hub1",(prevData)=>{
+            if(prevData.entry===undefined)
+                prevData=[];
+            else
+            prevData=prevData.entry;
+                let data = this.converArrayIntoObjectClassify(this.state.data);
+            
+            prevData.push({data:data,date:this.state.date});
+            console.log(prevData)
+            db.collection("entry").doc("hub1").set({
+                name: "hub1",
+                incharge: "X Men",
+                entry: prevData
+            })
+        })
+    }
     render() {
         console.log(this.state.data)
         return (
             <section id="Sales_Entry" className="Sales_Entry">
-                <div>
+                <div style={{marginBottom:"20px"}}>
+                    <h1>Sales Entry</h1>
+                </div>
+                <div style={{margin:"30px"}}>
                     <TopInfo />
                 </div>
                 <div className="sales-entry-top">
@@ -63,7 +108,7 @@ class SalesEntry extends React.Component {
                     <Button value="Add Item" func={this.addNewToData}/>
                 </div>
                 <div style={{marginTop:"20px"}}>
-                    <Button value="Submit" func={()=>{}} />
+                    <Button value="Submit" func={this.upDateToFirebase} />
                 </div>
             </section>
         )

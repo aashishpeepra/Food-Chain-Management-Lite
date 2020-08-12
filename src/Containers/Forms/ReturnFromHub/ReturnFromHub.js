@@ -1,7 +1,7 @@
 import React from "react";
 import ReturnHubRow from "../../../Components/ReturnHubRow/ReturnHubRow";
 import "./ReturnFromHub.css";
-
+import { db } from "../../../firebase";
 class ReturnFromHub extends React.Component {
   state = {
     rows: [<ReturnHubRow key="0" />],
@@ -17,7 +17,47 @@ class ReturnFromHub extends React.Component {
     });
     console.log("done");
   };
+  fetchFromFirebase = (collection, doc, cb) => {
+    db.collection(collection).doc(doc).get().then(data => {
+      console.log(data.data());
+      cb(data.data());
+    })
+      .catch(err => {
+        console.log('error while fetching', err);
+      })
+  }
+  converArrayIntoObjectClassify = (data) => {
+    let result = {};
+    let data2 = [...data];
+    data2.forEach(element => {
+      let key = element["category"];
+      delete element["category"];
+      if (result[key] === undefined)
+        result[key] = [element]
+      else
+        result[key].push(element);
+    });
+    console.log(result);
+    return result;
+  }
+  upDateToFirebase = () => {
+    console.log("hERE")
+    this.fetchFromFirebase("entry", "hub1", (prevData) => {
+      if (prevData.entry === undefined)
+        prevData = [];
+      else
+        prevData = prevData.entry;
+      let data = this.converArrayIntoObjectClassify(this.state.data);
 
+      prevData.push({ data: data, date: this.state.date });
+      console.log(prevData)
+      db.collection("entry").doc("hub1").set({
+        name: "hub1",
+        incharge: "X Men",
+        entry: prevData
+      })
+    })
+  }
   called = () => {
 
     let dataArray = [];
@@ -44,7 +84,7 @@ class ReturnFromHub extends React.Component {
 
     let returnDate = document.getElementById('input__field return__date').value || null;
 
-    for(let i=0; i<categoryNameArray.length; i++) {
+    for (let i = 0; i < categoryNameArray.length; i++) {
       dataArray.push({
         category: categoryNames[i],
         subCategory: subCategoryNames[i],
@@ -58,14 +98,15 @@ class ReturnFromHub extends React.Component {
       data: dataArray,
       returnDate: returnDate,
     });
-
-    console.log(this.state);
+    console.log(this.state.data)
+    this.upDateToFirebase();
 
   };
 
   render() {
     return (
       <section id="return__from__hub">
+
         <h1 className="form__heading">Return From Hub</h1>
         {this.state.rows.map(function (each, index) {
           return each;

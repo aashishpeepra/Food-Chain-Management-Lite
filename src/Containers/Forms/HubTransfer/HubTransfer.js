@@ -2,7 +2,7 @@ import React from 'react';
 import TopInfo from "../../../Components/TopInfo/TopInfo";
 import "./HubTransfer.css";
 import Button from "../../../Components/Button/Button";
-
+import {db} from "../../../firebase";
 function eachRow(data,currentKey,value,selectChange) {
     data=data.data;
     const keys=Object.keys(data);
@@ -27,6 +27,7 @@ function eachRow(data,currentKey,value,selectChange) {
 }
 class HubTransfer extends React.Component {
     state = {
+        transfer:"hub1",
         data: [],
         date: new Date().getTime(),
         hub1:{
@@ -51,15 +52,60 @@ class HubTransfer extends React.Component {
         copy[index][e.target.name]=e.target.value;
         this.setState({data:copy});
     }
+    fetchFromFirebase = (collection, doc, cb) => {
+        db.collection(collection).doc(doc).get().then(data => {
+            console.log(data.data());
+            cb(data.data());
+        })
+            .catch(err => {
+                console.log('error while fetching', err);
+            })
+    }
+    converArrayIntoObjectClassify = (data) => {
+        let result = {};
+        let data2 = [...data];
+        data2.forEach(element => {
+            let key = element["category"];
+            delete element["category"];
+            if(result[key]===undefined)
+                result[key]=[element]
+            else
+                result[key].push( element);
+        });
+        console.log(result);
+        return result;
+    }
+    upDateToFirebase = () => {
+        console.log("hERE")
+        this.fetchFromFirebase("transfer","hub1",(prevData)=>{
+            if(prevData.entry===undefined)
+                prevData=[];
+            else
+            prevData=prevData.entry;
+                let data = this.converArrayIntoObjectClassify(this.state.data);
+            
+            prevData.push({data:data,date:this.state.date});
+            console.log(prevData)
+            db.collection("transfer").doc("hub1").set({
+                name: "hub1",
+                incharge: "X Men",
+                entry: prevData,
+                transferto:this.state.transfer
+            })
+        })
+    }
     render(){
         return(
             <section id="Hub-Transfer" className="hub-transfer">
-                <div>
-                    <TopInfo/>
+                <div style={{marginBottom:"20px;"}}>
+                    <h1>Transfer To Hub</h1>
+                </div>
+                <div style={{margin:"30px"}}>
+                    <TopInfo />
                 </div>
                 <div className="hub-transfer-select">
                     <h3>Select Outlet To Transfer</h3>
-                    <select name="send">
+                    <select value={this.state.transfer} name="send">
                         <option value="hub1">Hub1</option>
                         <option value="hub2">Hub2</option>
                         <option value="hub3">Hub3</option>
@@ -73,7 +119,7 @@ class HubTransfer extends React.Component {
                     <Button value="Add Item" func={this.addNewToData}/>
                 </div>
                 <div style={{marginTop:"20px"}}>
-                    <Button value="Submit" func={()=>{}} />
+                    <Button value="Submit" func={this.upDateToFirebase} />
                 </div>
             </section>
         )
