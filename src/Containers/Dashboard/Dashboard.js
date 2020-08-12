@@ -1,5 +1,6 @@
 import React from "react";
 import PieChart from "../../Components/Chart/Chart";
+import TableRender from "../../Components/TableRender/TableRender";
 import "./Dashboard.css";
 
 class Dashboard extends React.Component {
@@ -13,6 +14,25 @@ class Dashboard extends React.Component {
       { name: "Chicken Lollipop", colour: "Violet", value: 6 },
       { name: "Chicken Kabab", colour: "Indigo", value: 17 },
     ],
+    tableData: {
+      headings: ["Category", "SubCategory", "UOM", "Quantity", "Reason"],
+      data: [
+        {
+          category: "a",
+          subCategory: "b",
+          UOM: "asfafa",
+          quantity: "asfaf",
+          reason: "asfasf",
+        },
+        {
+          category: "a",
+          subCategory: "d",
+          UOM: "asfaf",
+          quantity: "afssafxz",
+          reason: "fwegss",
+        },
+      ],
+    },
   };
   render() {
     return (
@@ -50,6 +70,7 @@ class Dashboard extends React.Component {
             </div>
           </div>
         </div>
+        <TableRender data={this.state.tableData}/>
       </main>
     );
   }
