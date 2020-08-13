@@ -1,5 +1,5 @@
 import React from "react";
-import {Switch,Route} from "react-router-dom";
+import {Switch,Route,Redirect} from "react-router-dom";
 import Login from "./Containers/Forms/Login/Login";
 import Dashboard from "./Containers/Dashboard/Dashboard";
 import Carcass from "./Containers/Forms/CarcassConverter/CarcassConverter";
@@ -11,9 +11,15 @@ import StockAvailable from "./Containers/Forms/StockAvailable/StockAvailable";
 import StockReceived from "./Containers/Forms/StockReceived/StockReceived";;
 
 export default class Router extends React.Component{
+    state={
+        loggedIn:false,
+        hub:null,
+        data:{}
+    }
     render(){
         return (
             <Switch>
+                <Route path="/" exact component={Login}/>
                 
                 <Route path="/forms/carcass" component={Carcass}/>
                 <Route path="/dashboard" component={Dashboard}/>
@@ -23,7 +29,9 @@ export default class Router extends React.Component{
                 <Route path="/forms/salesentry" component={SalesEntry}/>
                 <Route path="/forms/stockavailable" component={StockAvailable}/>
                 <Route path="/forms/stockreceived" component={StockReceived}/>
-                <Route path="/" component={Login}/>
+                <Route paht="/forms" render={()=>{
+                    return this.state.loggedIn?<h1>Works</h1>:<Redirect to="/"/>
+                }}/>
             </Switch>
         )
     }

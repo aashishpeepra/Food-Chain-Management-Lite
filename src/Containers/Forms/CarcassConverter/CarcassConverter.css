@@ -19,7 +19,9 @@
     justify-content: center;
 }
 .form-generator input{
-    max-width: 200px;
+    max-width: 100px;
+    padding:3px 10px;
+    text-align: center;
 }
 .form-generator p,.form-generator input{
     margin:0px 40px;

@@ -3,6 +3,9 @@ import PieChart from "../../Components/Chart/Chart";
 import TableRender from "../../Components/TableRender/TableRender";
 import "./Dashboard.css";
 
+
+
+
 class Dashboard extends React.Component {
   state = {
     data: [
@@ -34,6 +37,13 @@ class Dashboard extends React.Component {
       ],
     },
   };
+  sortedForm=(data)=>{
+    let copy=[...this.state.data];
+    copy.sort((a,b)=>{
+      return -a.value+b.value;
+    })
+    return copy;
+  }
   render() {
     return (
       <main>
@@ -51,7 +61,7 @@ class Dashboard extends React.Component {
               <PieChart data={this.state.data} />
             </div>
             <div className="right__section">
-              {this.state.data.map((each) => {
+              {this.sortedForm(this.state.data).map((each) => {
                 return (
                   <div className="each__box">
                     <div
@@ -62,7 +72,7 @@ class Dashboard extends React.Component {
                     </div>
                     <div className="value__box">
                       <div className="item__name">{each.name}</div>
-                      <div className="item__value">{each.value}</div>
+                      <div className="item__value">{each.value} Kg</div>
                     </div>
                   </div>
                 );

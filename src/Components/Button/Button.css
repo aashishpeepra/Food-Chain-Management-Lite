@@ -9,6 +9,7 @@
     letter-spacing: 1px;
     font-size: 100%;
     min-width:100px;
+    cursor: pointer;
 }
 .btnMy:focus{
     outline: none;

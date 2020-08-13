@@ -1,0 +1,6 @@
+.Sales_Entry select,.Sales_Entry input{
+    height:30px;
+    font-size:100%;
+    text-align: center;
+    padding:4px 10px;
+}

@@ -1,5 +1,8 @@
 .chart__section {
-    background-color: rgb(238, 235, 235);
+    background-color: #fff;
+    width:95%;
+    border-radius:25px;
+    margin:auto;
     display: flex;
     flex-direction: column;
     padding: 2rem;
@@ -56,8 +59,9 @@
 
 .each__box {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: left;
+    align-items: baseline;
+    min-width: 200px;
 }
 
 .color__box {

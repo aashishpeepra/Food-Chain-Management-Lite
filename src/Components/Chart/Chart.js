@@ -22,7 +22,7 @@ class Chart extends React.Component {
     };
     return (
       <div className="Chart">
-        <Doughnut data={data} height="50%" options={{
+        <Doughnut data={data} height="130%" options={{
           legend: {
             display: false,
           },

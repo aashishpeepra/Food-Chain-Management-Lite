@@ -114,9 +114,12 @@ class StockAvailable extends React.Component{
         console.log()
         return(
             <section id="Stock Available" className="StockAvailable">
-            <div>
-            <TopInfo/>
-            </div>
+            <div style={{marginBottom:"20px;"}}>
+                    <h1>Inventory</h1>
+                </div>
+                <div style={{margin:"30px"}}>
+                    <TopInfo />
+                </div>
             <div className="StockAvailable-select">
                 <h2>Select Store</h2>
                 <select onChange={this.onSelectChange}>
