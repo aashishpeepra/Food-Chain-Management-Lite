@@ -1,8 +1,9 @@
 import React from "react";
+import "./Login.css";
 import { loginUser } from "../../../firebase";
 import * as actionTypes from "../../../store/actions";
 import { connect } from "react-redux";
-
+import Button from "../../../Components/Button/Button";
 class Login extends React.Component {
   state = {
     email: "",
@@ -20,27 +21,41 @@ class Login extends React.Component {
   logInFunc = () => {
     loginUser(this.state.email, this.state.password, this.redirectToDashboard);
   };
+  componentWillMount(){
+    
+    if(this.props.auth)
+    this.props.history.push("/dashboard")
+  }
   render() {
     return (
-      <form>
-        <label htmlFor="email">Email</label>
-        <input
-          onChange={this.onInputChange}
-          type="email"
-          id="email"
-          name="email"
-        />
-        <label htmlFor="password">Password</label>
-        <input
-          onChange={this.onInputChange}
-          type="password"
-          id="password"
-          name="password"
-        />
-        <button type="button" onClick={this.logInFunc}>
-          LogIn
-        </button>
-      </form>
+      <section id="login">
+
+        <h1>Login </h1>
+        <form className="Login">
+          <fieldset>
+            <label htmlFor="email">Email</label>
+            <input
+              onChange={this.onInputChange}
+              type="email"
+              id="email"
+              name="email"
+            />
+          </fieldset>
+          <fieldset>
+            <label htmlFor="password">Password</label>
+            <input
+              onChange={this.onInputChange}
+              type="password"
+              id="password"
+              name="password"
+            />
+          </fieldset>
+          <div className="Login-button">
+            <Button value="Login" func={this.logInFunc} />
+          </div>
+
+        </form>
+      </section>
     );
   }
 }

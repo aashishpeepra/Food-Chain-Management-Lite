@@ -1,0 +1,22 @@
+.Login {
+    display:flex;
+    align-items: left;
+    flex-direction: column;
+    justify-content: left;
+}
+.Login input{
+    display:inline-block;
+    margin-left:20px;
+    height:30px;
+    min-width: 200px;
+}
+.Login fieldset{
+    border:0px;
+    margin:20px;
+}
+#login h1{
+    margin-bottom:30px;
+}
+.Login-button{
+    margin-top:30px;
+}

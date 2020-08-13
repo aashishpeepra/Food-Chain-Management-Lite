@@ -3,7 +3,7 @@ import TopInfo from "../../../Components/TopInfo/TopInfo";
 import "./HubTransfer.css";
 import Button from "../../../Components/Button/Button";
 import {db} from "../../../firebase";
-function eachRow(data,currentKey,value,selectChange) {
+function eachRow(index,removeIndex,data,currentKey,value,selectChange) {
     data=data.data;
     const keys=Object.keys(data);
     console.log(data,keys,currentKey,data[currentKey]);
@@ -22,6 +22,9 @@ function eachRow(data,currentKey,value,selectChange) {
             </select>
             <input name="qty" type="text" placeholder="Quantity" value={value} onChange={selectChange} />
             <input name="totalweight" type="text" placeholder="Total" value={value!==""?parseFloat(value)*500/1000:0} disabled/>
+            <div className="cross" onClick={()=>removeIndex(index)}>
+                    X
+            </div>
         </div>
     )
 }
@@ -42,6 +45,15 @@ class HubTransfer extends React.Component {
             }
         },
     }
+    removeIndex=(index)=>{
+        let copy=[...this.state.data];
+        copy.splice(index,1);
+        this.setState({data:copy});
+    }
+    componentWillMount(){
+        if(!this.props.auth)
+        this.props.history.push("/");
+      }
     addNewToData=()=>{
         let copy=[...this.state.data];
         copy.push({category:"first",product:"",uom:1,qty:0});
@@ -112,8 +124,15 @@ class HubTransfer extends React.Component {
                         <option value="hub4">Hub4</option>
                     </select>
                 </div>
+                <div className="headers">
+                    <h5>Category</h5>
+                    <h5>Sub-Category</h5>
+                    <h5>UOM</h5>
+                    <h5>Packing</h5>
+                    <h5>Quantity</h5>
+                </div>
                 <div className="sales-entry-top">
-                    {this.state.data.map((each,index)=>eachRow(this.state.hub1,this.state.data[index].category,this.state.data[index].qty,(e)=>this.setSelectValue(e,index)))}
+                    {this.state.data.map((each,index)=>eachRow(index,this.removeIndex,this.state.hub1,this.state.data[index].category,this.state.data[index].qty,(e)=>this.setSelectValue(e,index)))}
                 </div>
                 <div>
                     <Button value="Add Item" func={this.addNewToData}/>

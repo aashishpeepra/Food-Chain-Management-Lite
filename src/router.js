@@ -1,5 +1,5 @@
 import React from "react";
-import {Switch,Route,Redirect} from "react-router-dom";
+import {Switch,Route,Redirect,render} from "react-router-dom";
 import Login from "./Containers/Forms/Login/Login";
 import Dashboard from "./Containers/Dashboard/Dashboard";
 import Carcass from "./Containers/Forms/CarcassConverter/CarcassConverter";
@@ -17,21 +17,20 @@ export default class Router extends React.Component{
         data:{}
     }
     render(){
+        console.log(this.props)
         return (
             <Switch>
-                <Route path="/" exact component={Login}/>
+                <Route path="/" exact render={(props)=><Login {...props} auth={this.props.loggedIn}/>}/>
                 
-                <Route path="/forms/carcass" component={Carcass}/>
-                <Route path="/dashboard" component={Dashboard}/>
-                <Route path="/forms/hubtransfer" component={HubTransfer}/>
-                <Route path="/forms/deliverysla" component={DeliverySLA}/>
-                <Route path="/forms/returnfromhub" component={ReturnFromHub}/>
-                <Route path="/forms/salesentry" component={SalesEntry}/>
-                <Route path="/forms/stockavailable" component={StockAvailable}/>
-                <Route path="/forms/stockreceived" component={StockReceived}/>
-                <Route paht="/forms" render={()=>{
-                    return this.state.loggedIn?<h1>Works</h1>:<Redirect to="/"/>
-                }}/>
+                <Route path="/forms/carcass" render={(props)=><Carcass {...props} auth={this.props.loggedIn}/>}/>
+                <Route path="/dashboard" render={(props)=><Dashboard {...props} auth={this.props.loggedIn}/>}/>
+                <Route path="/forms/hubtransfer" render={(props)=><HubTransfer {...props} auth={this.props.loggedIn}/>}/>
+                <Route path="/forms/deliverysla" render={(props)=><DeliverySLA {...props} auth={this.props.loggedIn}/>}/>
+                <Route path="/forms/returnfromhub" render={(props)=><ReturnFromHub {...props} auth={this.props.loggedIn}/>}/>
+                <Route path="/forms/salesentry" render={(props)=><SalesEntry {...props} auth={this.props.loggedIn}/>}/>
+                <Route path="/forms/stockavailable" render={(props)=><StockAvailable {...props} auth={this.props.loggedIn}/>}/>
+                <Route path="/forms/stockreceived" render={(props)=><StockReceived {...props} auth={this.props.loggedIn}/>}/>
+                
             </Switch>
         )
     }

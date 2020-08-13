@@ -4,3 +4,11 @@
     text-align: center;
     padding:4px 10px;
 }
+.headers{
+    display:flex;
+    align-items: baseline;
+    justify-content: center;
+}
+.Sales-Entry .headers h5{
+    margin-right:70px;
+}

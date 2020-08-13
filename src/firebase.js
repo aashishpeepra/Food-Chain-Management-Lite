@@ -1,4 +1,5 @@
 import * as firebase from 'firebase';
+import {store} from "./index";
 const firebaseConfig = {
     apiKey: "AIzaSyAgC5jdB2IX_Ph1CoVRDqQ2YacTGGI-j1s",
     authDomain: "foodchainmanage.firebaseapp.com",
@@ -39,7 +40,7 @@ function logout() {
 
 firebase.auth().onAuthStateChanged(firebaseUser => {
     if (firebaseUser) {
-
+        store.dispatch({type:"LOGIN__SUCCESS"})
 
     }
     else {

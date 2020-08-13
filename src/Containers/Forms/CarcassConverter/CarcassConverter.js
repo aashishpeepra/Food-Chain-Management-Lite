@@ -85,6 +85,10 @@ class Dashboard extends React.Component {
         obj[e.target.name] = e.target.value;
         this.setState({ obj });
     }
+    componentWillMount(){
+        if(!this.props.auth)
+        this.props.history.push("/");
+      }
     render() {
         return (
             <section id="CarCass_Converter">
@@ -115,6 +119,15 @@ class Dashboard extends React.Component {
                         <h3>Original Weight</h3>
                         <input onChange={(e) => { this.setState({ total: e.target.value }) }} value={this.state.total} type="text" id="weight" name="weight" placeholder="Enter Weight" />
                     </div>
+                    <div className="Carcass-converter-option-div">
+                        <h3>Net Weight</h3>
+                        <input disabled  value={parseFloat(this.state.total)-parseFloat(this.state.formRender[0].value)} type="text" id="weight" name="weight" placeholder="Enter Weight" />
+                    </div>
+                </div>
+                <div className="headers">
+                    <h5 style={{marginRight:"150px"}}>Category</h5>
+                    <h5>Quantity</h5>
+                    <h5 style={{marginLeft:"120px"}}> Percentage</h5>
                 </div>
                 <div className="Carcass-Generated-Form">
                     {this.state.formRender.map((each, index) => formGenerator(each, this.state.show, (e) => this.changeFormAtIndex(e, index)))}

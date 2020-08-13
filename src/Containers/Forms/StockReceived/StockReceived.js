@@ -3,29 +3,37 @@ import TopInfo from "../../../Components/TopInfo/TopInfo";
 import "./StockReceived.css";
 import Button from "../../../Components/Button/Button";
 import { db } from "../../../firebase";
-function eachRow(data, currentKey, value, selectChange) {
+function eachRow(index,removeIndex,data, currentKey, value, selectChange) {
     data = data.data;
     const keys = Object.keys(data);
     console.log(data, keys, currentKey, data[currentKey]);
+    if(currentKey!==undefined)
     return (
         <div className="sales-entry-each-row">
+            {/* <h5>Category</h5> */}
             <select name="category" onChange={selectChange}>
                 {keys.map(each => <option value={each} key={each}>{each}</option>)}
             </select>
+            {/* <h5>Sub-Category</h5> */}
             <select name="product" onChange={selectChange}>
                 {data[currentKey].map(each => <option value={each} key={each}>{each}</option>)}
             </select>
-
+            {/* <h5>Sub-Category</h5> */}
             <select name="uom" onChange={selectChange}>
                 <option value="1">500 gram</option>
                 <option value="2">200 Gram</option>
             </select>
-
+            {/* <h5>Sub-Category</h5> */}
             <select name="packing" onChange={selectChange}>
                 <option value="vacuum">Vaccum Pack</option>
                 <option value="regular">Regular</option>
             </select>
+            {/* <h5>Sub-Category</h5> */}
             <input name="qty" type="text" placeholder="Quantity" value={value} onChange={selectChange} />
+            <input name="total" disabled type="text" placeholder="Total" value={parseFloat(value)*parseFloat(1)}/>
+            <div className="cross" onClick={()=>removeIndex(index)}>
+                    X
+            </div>
         </div>
     )
 }
@@ -61,7 +69,7 @@ class StockReceived extends React.Component {
             cb(data.data());
         })
             .catch(err => {
-                console.log('error while fetching', err,collection,doc);
+                console.log('error while fetching', err, collection, doc);
             })
     }
     converArrayIntoObjectClassify = (data) => {
@@ -78,8 +86,13 @@ class StockReceived extends React.Component {
         console.log(result);
         return result;
     }
+    removeIndex=(index)=>{
+        let copy=[...this.state.data];
+        copy.splice(index,1);
+        this.setState({data:copy});
+    }
     upDateToFirebase = () => {
-        let data = this.converArrayIntoObjectClassify(this.state.data);
+        let data = {...this.converArrayIntoObjectClassify(this.state.data)};
         this.fetchFromFirebase("received", "hub1", (prevData) => {
 
             prevData = prevData.received;
@@ -90,45 +103,62 @@ class StockReceived extends React.Component {
                 received: prevData
             })
         })
+        this.updateInventory(data)
+
+    }
+    updateInventory = (data) => {
+        console.log(data)
         this.fetchFromFirebase("stock", "hub1", (prevData) => {
             if (prevData === {}) {
                 alert("Stock not available");
             }
             else {
-                let stock = prevData.stock;
-                if(stock===undefined)
-                stock={};
-                console.log(stock)
                 let keys = Object.keys(data);
+                let stock = prevData.stock;
+                if (stock === undefined)
+                    stock = {};
                 keys.forEach(element => {
-                    let entrya = data[element];
-                    if (stock[element] !== undefined) {
-
-                        for (let i = 0; i < stock[element].length; i++) {
+                    // in case property isn't present
+                    if (stock[element] === undefined)
+                    {
+                        stock[element] = data[element];
+                    }
+                    else {
+                        console.log("-->",stock[element])
+                        for (let i = 0; i < data[element].length; i++) {
                             let found = false;
-                            for (let j = 0; j < entrya.length; j++) {
-                                if (entrya[j].product === stock[element][i].product) {
-                                    let salesValue = parseFloat(entrya[j].value);
-                                    let stockValue = parseFloat(stock[element][j].value);
+                            for (let j = 0; j < stock[element].length; j++) {
+                                console.log(stock[element][j])
+                                if (stock[element][j].product.toLowerCase() === data[element][i].product.toLowerCase()) {
                                     found = true;
-                                    stock[element][i].value = stockValue + salesValue;
+                                    let dataTemp = parseFloat(data[element][i].qty);
+                                    let stockTemp = parseFloat(stock[element][j].qty);
+                                    stock[element][j].qty = stockTemp + dataTemp;
                                 }
                             }
-                            
+                            // product not found in array
+                            if (found === false) {
+                                stock[element].push(data[element[i]]);
+                            }
                         }
-
                     }
-                    else
-                        stock[element] = data[element];
 
                 })
                 db.collection("stock").doc("hub1").set({
                     name:"hub1",
-                    incharge:"temp",
+                    incharge:"X Men",
                     stock:stock
+                }).then(()=>{
+                    
+                    alert("Form Uploaded");
                 })
+
             }
         })
+    }
+    componentWillMount() {
+        if (!this.props.auth)
+            this.props.history.push("/");
     }
     render() {
         console.log(this.state.data)
@@ -140,8 +170,16 @@ class StockReceived extends React.Component {
                 <div style={{ margin: "30px" }}>
                     <TopInfo />
                 </div>
+                <div className="headers">
+                    <h5>Category</h5>
+                    <h5>Sub-Category</h5>
+                    <h5>UOM</h5>
+                    <h5>Packing</h5>
+                    <h5>Quantity</h5>
+                    <h5>Total</h5>
+                </div>
                 <div className="sales-entry-top">
-                    {this.state.data.map((each, index) => eachRow(this.state.hub1, this.state.data[index].category, this.state.data[index].qty, (e) => this.setSelectValue(e, index)))}
+                    {this.state.data.map((each, index) => eachRow(index,this.removeIndex,this.state.hub1, this.state.data[index].category, this.state.data[index].qty, (e) => this.setSelectValue(e, index)))}
                 </div>
                 <div>
                     <Button value="Add Item" func={this.addNewToData} />

@@ -2,6 +2,8 @@ import React from 'react';
 import TopInfo from "../../../Components/TopInfo/TopInfo";
 import "./StockAvailable.css";
 import Category from "../../../Components/UI/Blocks/OuterBlock/OuterBlock";
+import {db} from "../../../firebase"
+
 class StockAvailable extends React.Component{
     state={
         eachStore:{
@@ -85,13 +87,27 @@ class StockAvailable extends React.Component{
                 }
             },
         },
-        selectHub:"hub1"
+        selectHub:"hub1",
+        stock:{}
     }
+    componentWillMount(){
+        if(!this.props.auth)
+        this.props.history.push("/");
+      }
+      componentDidMount(){
+          
+              db.collection("stock").doc("hub1").get()
+              .then(data=>{
+                  console.log(data.data());
+                  this.setState({stock:data.data().stock});
+              })
+         
+      }
     onSelectChange=(e)=>{
         this.setState({selectHub:e.target.value});
     }
     renderHub=(hub)=>{
-        hub=hub["data"]
+        
         const keys=Object.keys(hub);
         let sum=0;
         let categoryPair=[];
@@ -99,7 +115,7 @@ class StockAvailable extends React.Component{
         console.log(keys)
         keys.forEach(element => {
            hub[element].forEach(each => {
-               sum+=each["qty"];
+               sum+=parseFloat(each["qty"]);
            }); 
            categoryPair[count]={};
            categoryPair[count]["name"]=element;
@@ -115,7 +131,7 @@ class StockAvailable extends React.Component{
         return(
             <section id="Stock Available" className="StockAvailable">
             <div style={{marginBottom:"20px;"}}>
-                    <h1>Inventory</h1>
+                    <h1>Stock Available</h1>
                 </div>
                 <div style={{margin:"30px"}}>
                     <TopInfo />
@@ -129,7 +145,7 @@ class StockAvailable extends React.Component{
                 </select>
             </div>
             <div>
-                {this.renderHub(this.state.eachStore[this.state.selectHub]).map(each=><Category data={each}/>)}
+                {this.renderHub(this.state.stock).map(each=><Category data={each}/>)}
             </div>
                 
             </section>

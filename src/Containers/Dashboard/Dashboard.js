@@ -44,6 +44,10 @@ class Dashboard extends React.Component {
     })
     return copy;
   }
+  componentWillMount(){
+    if(!this.props.auth)
+    this.props.history.push("/");
+  }
   render() {
     return (
       <main>

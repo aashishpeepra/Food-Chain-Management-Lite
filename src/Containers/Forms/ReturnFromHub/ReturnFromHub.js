@@ -58,6 +58,10 @@ class ReturnFromHub extends React.Component {
       })
     })
   }
+  componentWillMount(){
+    if(!this.props.auth)
+    this.props.history.push("/");
+  }
   called = () => {
 
     let dataArray = [];

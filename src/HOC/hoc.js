@@ -18,6 +18,7 @@ class Aux extends React.Component {
     this.setState({ SideDrawerOpen: !this.state.SideDrawerOpen });
   };
   render() {
+    console.log(this.props.loggedIn)
     let backdrop;
     if (this.state.SideDrawerOpen) {
       backdrop = <Backdrop clicked={this.backdropClickHandler} />;
@@ -33,7 +34,8 @@ class Aux extends React.Component {
         ) : null}
         <SideDrawer show={this.state.SideDrawerOpen} />
         {backdrop}
-        {this.props.children}
+        {React.cloneElement(this.props.children,{loggedIn:this.props.loggedIn})}
+        {/* {this.props.children} */}
       </main>
     );
   }
