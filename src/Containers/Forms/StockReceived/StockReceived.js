@@ -61,7 +61,7 @@ class StockReceived extends React.Component {
             cb(data.data());
         })
             .catch(err => {
-                console.log('error while fetching', err);
+                console.log('error while fetching', err,collection,doc);
             })
     }
     converArrayIntoObjectClassify = (data) => {
@@ -70,25 +70,64 @@ class StockReceived extends React.Component {
         data2.forEach(element => {
             let key = element["category"];
             delete element["category"];
-            if(result[key]===undefined)
-                result[key]=[element]
+            if (result[key] === undefined)
+                result[key] = [element]
             else
-                result[key].push( element);
+                result[key].push(element);
         });
         console.log(result);
         return result;
     }
     upDateToFirebase = () => {
-        
-        this.fetchFromFirebase("received","hub1",(prevData)=>{
-            let data = this.converArrayIntoObjectClassify(this.state.data);
-            prevData=prevData.received;
-            prevData.push({data:data,date:this.state.date});
+        let data = this.converArrayIntoObjectClassify(this.state.data);
+        this.fetchFromFirebase("received", "hub1", (prevData) => {
+
+            prevData = prevData.received;
+            prevData.push({ data: data, date: this.state.date });
             db.collection("received").doc("hub2").set({
                 name: "hub1",
                 incharge: "X Men",
                 received: prevData
             })
+        })
+        this.fetchFromFirebase("stock", "hub1", (prevData) => {
+            if (prevData === {}) {
+                alert("Stock not available");
+            }
+            else {
+                let stock = prevData.stock;
+                if(stock===undefined)
+                stock={};
+                console.log(stock)
+                let keys = Object.keys(data);
+                keys.forEach(element => {
+                    let entrya = data[element];
+                    if (stock[element] !== undefined) {
+
+                        for (let i = 0; i < stock[element].length; i++) {
+                            let found = false;
+                            for (let j = 0; j < entrya.length; j++) {
+                                if (entrya[j].product === stock[element][i].product) {
+                                    let salesValue = parseFloat(entrya[j].value);
+                                    let stockValue = parseFloat(stock[element][j].value);
+                                    found = true;
+                                    stock[element][i].value = stockValue + salesValue;
+                                }
+                            }
+                            
+                        }
+
+                    }
+                    else
+                        stock[element] = data[element];
+
+                })
+                db.collection("stock").doc("hub1").set({
+                    name:"hub1",
+                    incharge:"temp",
+                    stock:stock
+                })
+            }
         })
     }
     render() {
