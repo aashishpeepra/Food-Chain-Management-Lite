@@ -8,7 +8,24 @@
     display:flex;
     align-items: baseline;
     justify-content: center;
+    margin-top:40px;
 }
-.Sales-Entry .headers h5{
-    margin-right:70px;
+.stk .headers h5{
+    margin-right:73px;
+}
+.checkboxes fieldset label{
+    display:block
+}
+.checkboxes fieldset{
+    border:0;
+    margin:0px 20px;
+    /* display: flex;
+    flex-direction: row; */
+    /* align-items: center; */
+}
+.checkboxes {
+    display: flex;
+    align-items:center;
+    justify-content: center;
+    margin:20px;
 }

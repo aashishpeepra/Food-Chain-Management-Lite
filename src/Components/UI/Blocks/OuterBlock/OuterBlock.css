@@ -1,5 +1,6 @@
 .Available-Category-Block-Items{
     display:flex;
+    flex-wrap: wrap;
 }
 .Available-Category-Block-Head{
     text-align: left;

@@ -6,89 +6,10 @@ import {db} from "../../../firebase"
 
 class StockAvailable extends React.Component{
     state={
-        eachStore:{
-            hub1:{
-                data:{
-                    first:[
-                        {
-                            
-                            product:"second",
-                            uom:1,
-                            qty:32,
-                            packing:"vacuum"
-                        },
-                        {
-                            
-                            product:"second",
-                            uom:1,
-                            qty:32,
-                            packing:"vacuum"
-                        }
-                    ],
-                    second:[
-                        {
-                            
-                            product:"second",
-                            uom:1,
-                            qty:32,
-                            packing:"vacuum"
-                        },
-                        {
-                            
-                            product:"second",
-                            uom:1,
-                            qty:32,
-                            packing:"vacuum"
-                        }
-                    ],
-                }
-            },
-            hub2:{
-                data:{
-                    first:[
-                        {
-                            
-                            product:"second",
-                            uom:1,
-                            qty:32,
-                            packing:"vacuum"
-                        },
-                        {
-                            
-                            product:"second",
-                            uom:1,
-                            qty:32,
-                            packing:"vacuum"
-                        }
-                    ],
-                    second:[
-                        {
-                            
-                            product:"second",
-                            uom:1,
-                            qty:32,
-                            packing:"vacuum"
-                        },
-                        {
-                            
-                            product:"second",
-                            uom:1,
-                            qty:32,
-                            packing:"vacuum"
-                        },
-                        {
-                            
-                            product:"second",
-                            uom:1,
-                            qty:39,
-                            packing:"vacuum"
-                        }
-                    ],
-                }
-            },
-        },
+        
         selectHub:"hub1",
-        stock:{}
+        stock:{},
+        date:new Date()
     }
     componentWillMount(){
         if(!this.props.auth)
@@ -134,7 +55,7 @@ class StockAvailable extends React.Component{
                     <h1>Stock Available</h1>
                 </div>
                 <div style={{margin:"30px"}}>
-                    <TopInfo />
+                    <TopInfo date={this.state.date} />
                 </div>
             <div className="StockAvailable-select">
                 <h2>Select Store</h2>

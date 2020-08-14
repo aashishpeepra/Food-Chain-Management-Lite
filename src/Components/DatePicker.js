@@ -23,10 +23,11 @@ export default class Example extends React.Component {
     </button>
   );
   render() {
+    console.log(this.props)
     return (
       <DatePicker
-        selected={this.state.startDate}
-        onChange={this.handleChange}
+        selected={this.props.selected}
+        onChange={date=>this.props.change(date)}
         fixedHeight="300px"
       />
     );

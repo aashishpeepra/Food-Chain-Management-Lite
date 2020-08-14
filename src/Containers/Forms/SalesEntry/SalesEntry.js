@@ -3,26 +3,26 @@ import TopInfo from "../../../Components/TopInfo/TopInfo";
 import "./SalesEntry.css";
 import Button from "../../../Components/Button/Button";
 import { db } from "../../../firebase";
-function eachRow(index,removeIndex,data, currentKey, value, selectChange) {
-    data = data.data;
+function eachRow(each,index,removeIndex,data,allUom, selectChange) {
     const keys = Object.keys(data);
-    console.log(data, keys, currentKey, data[currentKey]);
-    if(currentKey!==undefined)
+    let uomKeys=Object.keys(allUom);
+    if(each.category!==undefined)
     return (
         <div className="sales-entry-each-row" key={Math.random()}>
-            <select name="category" value={keys[0]}  onChange={selectChange}>
+            <select name="category" value={each.category}  onChange={selectChange}>
                 {keys.map(each => <option value={each} key={each}>{each}</option>)}
             </select>
-            <select name="product" value={data[keys[0]][0].product} onChange={selectChange}>
-                {data[currentKey].map(each => <option value={each} key={each + Math.random()}>{each}</option>)}
+            <select name="product" value={each.product} onChange={selectChange}>
+                {data[each.category].map(each => <option value={each} key={each + Math.random()}>{each}</option>)}
             </select>
 
-            <select name="uom" onChange={selectChange}>
-                <option value="1">500 gram</option>
-                <option value="2">200 Gram</option>
-            </select>
-            <input name="qty" type="text" placeholder="Quantity" value={value} onChange={selectChange} />
-            <input name="total" type="text" placeholder="total" value={parseFloat(value)} disabled/>
+            <select name="uom" value={each.uom}  onChange={selectChange}>
+                    {uomKeys.map(each=>{
+                        return <option value={each}>{allUom[each].name}</option>
+                    })}
+                </select>
+            <input name="qty" type="text" placeholder="Quantity" value={each.qty} onChange={selectChange} />
+            <input name="total" type="text" placeholder="total" value={parseFloat(each.qty)*parseFloat(allUom[each.uom].value)} disabled/>
             <div className="cross" onClick={()=>removeIndex(index)}>
                     X
             </div>
@@ -33,21 +33,12 @@ class SalesEntry extends React.Component {
     state = {
         data: [],
         date: new Date().getTime(),
-        hub1: {
-            data: {
-                first: [
-                    "first", "second"
-                ],
-                second: [
-                    "second", "second"
-
-                ],
-            }
-        },
+        selected:[]
+       
     }
     addNewToData = () => {
         let copy = [...this.state.data];
-        copy.push({ category: "first", product: "first", uom: 1, qty: 0 });
+        copy.push({ category: "eggs", product: "eggs", uom: 3, qty: 0 });
         this.setState({ data: copy });
     }
     setSelectValue = (e, index) => {
@@ -155,10 +146,53 @@ class SalesEntry extends React.Component {
             }
         })
     }
+    onCheckBoxChange = (e) => {
+        // selected list of categories
+        let selects = [...this.state.selected];
+        let dt = [...this.state.data];
+        // tooggle effect
+        let found = false;
+        let pos = 0;
+        let count = 0;
+        selects.forEach(element => {
+            if (element.toLowerCase() === e.target.value.toLowerCase()) {
+                found = true;
+                pos = count;
+            }
+            count++;
+        })
+        if (found) {
+            let dt2 = [];
+            for (let i = 0; i < dt.length; i++) {
+
+                if (dt[i].category.toLowerCase() !== e.target.value.toLowerCase())
+                    dt2.push(dt[i])
+            }
+            dt = dt2;
+            selects.splice(pos, 1);
+        }
+        else {
+            let temp = this.props.category[e.target.value.toLowerCase()];
+            console.log(this.props.classifyUom(e.target.value),e.target.value)
+            for (let i = 0; i < temp.length; i++) {
+                dt.push({ category: e.target.value, product: temp[i], uom: this.props.classifyUom(e.target.value), qty: 0 });
+                console.log(temp[i]);
+            }
+
+            selects.push(e.target.value);
+        }
+        // change thye state to updated list of selected items
+        this.setState({ selected: selects, data: dt });
+
+    }
     componentWillMount(){
         if(!this.props.auth)
         this.props.history.push("/");
       }
+      setDate = (e) => {
+        console.log(e)
+        this.setState({ date: e });
+    }
     render() {
         console.log(this.state.data)
         return (
@@ -167,7 +201,38 @@ class SalesEntry extends React.Component {
                     <h1>Sales Entry</h1>
                 </div>
                 <div style={{ margin: "30px" }}>
-                    <TopInfo />
+                    <TopInfo onChange={this.setDate} date={this.state.date} />
+                </div>
+                <div className="checkboxes">
+                    <fieldset>
+                        <label htmlFor="chicken">Chicken</label>
+                        <input type="checkbox" id="chicken" value="chicken" onChange={this.onCheckBoxChange} />
+                    </fieldset>
+                    <fieldset>
+                        <label htmlFor="mutton">Mutton</label>
+                        <input type="checkbox" id="mutton" value="mutton" onChange={this.onCheckBoxChange} />
+                    </fieldset>
+                    <fieldset>
+                        <label htmlFor="seafood">Sea Food</label>
+                        <input type="checkbox" id="seafood" value="seafood" onChange={this.onCheckBoxChange} />
+                    </fieldset>
+                    <fieldset>
+                        <label htmlFor="eggs">Eggs</label>
+                        <input type="checkbox" id="eggs" value="eggs" onChange={this.onCheckBoxChange} />
+                    </fieldset>
+                    <fieldset>
+                        <label htmlFor="marinades">Marinades</label>
+                        <input type="checkbox" id="marinades" value="marinades" onChange={this.onCheckBoxChange} />
+                    </fieldset>
+                    <fieldset>
+                        <label htmlFor="oil">Oil</label>
+                        <input type="checkbox" id="oil" value="oil" onChange={this.onCheckBoxChange} />
+                    </fieldset>
+                    <fieldset>
+                        <label htmlFor="petfood">Pet Food</label>
+                        <input type="checkbox" id="petfood" value="petfood" onChange={this.onCheckBoxChange} />
+                    </fieldset>
+
                 </div>
                 <div className="headers">
                     <h5>Category</h5>
@@ -177,7 +242,7 @@ class SalesEntry extends React.Component {
                     <h5>Total</h5>
                 </div>
                 <div className="sales-entry-top">
-                    {this.state.data.map((each, index) => eachRow(index,this.removeIndex,this.state.hub1, this.state.data[index].category, this.state.data[index].qty, (e) => this.setSelectValue(e, index)))}
+                    {this.state.data.map((each, index) => eachRow(each,index,this.removeIndex,this.props.category,this.props.uom, (e) => this.setSelectValue(e, index)))}
                 </div>
                 <div>
                     <Button value="Add Item" func={this.addNewToData} />
