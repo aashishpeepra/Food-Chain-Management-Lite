@@ -85,7 +85,7 @@ class StockReceived extends React.Component {
 
             prevData = prevData.received;
             prevData.push({ data: data, date: this.state.date });
-            db.collection("received").doc("hub2").set({
+            db.collection("received").doc("hub1").set({
                 name: "hub1",
                 incharge: "X Men",
                 received: prevData

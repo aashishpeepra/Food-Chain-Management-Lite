@@ -35,7 +35,8 @@ class StockReceived extends React.Component {
     state = {
         data: [],
         date: new Date(),
-        selected: []
+        selected: [],
+        to:"hub2"
     }
     addNewToData = () => {
         let copy = [...this.state.data];
@@ -79,12 +80,14 @@ class StockReceived extends React.Component {
         let data = { ...this.converArrayIntoObjectClassify(this.state.data) };
         this.fetchFromFirebase("transfer", "hub1", (prevData) => {
 
-            prevData = prevData.received;
-            prevData.push({ data: data, date: this.state.date });
-            db.collection("received").doc("hub2").set({
+            
+            if(prevData.transfer===undefined)
+            prevData=[];
+            prevData.push({ data: data, date: this.state.date,transferTo:this.state.to });
+            db.collection("transfer").doc("hub1").set({
                 name: "hub1",
                 incharge: "X Men",
-                received: prevData
+                transfer: prevData
             })
         })
         this.updateInventory(data)
@@ -187,7 +190,7 @@ class StockReceived extends React.Component {
         this.setState({ date: e });
     }
     forSelect=(e)=>{
-      this.setState({transfer:e.target.value})
+      this.setState({to:e.target.value})
     }
     render() {
         console.log(this.state.data)
@@ -201,7 +204,7 @@ class StockReceived extends React.Component {
                 </div>
                 <div className="transfer_select">
                   <h3>Transfer to hub</h3>
-                  <select  onChange={this.forSelect}>
+                  <select name="to"  onChange={this.forSelect}>
                     <option value="hub1" >Hub1</option>
                     <option value="hub2">Hub2</option>
                     <option value="hub3">Hub3</option>

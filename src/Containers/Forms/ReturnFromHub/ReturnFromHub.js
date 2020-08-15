@@ -26,6 +26,7 @@ function eachRow(each,index, removeIndex, data,allUom,  selectChange) {
         
                 <input name="qty" type="text" placeholder="Quantity" value={each.qty} onChange={selectChange} />
                 <input name="total" disabled type="text" placeholder="Total" value={parseFloat(each.qty)*parseFloat(allUom[each.uom].value)} />
+                <input name="reason" type="text" placeholder="Reason" value={each.reason} onChange={selectChange}/>
                 <div className="cross" onClick={() => removeIndex(index)}>
                     X
             </div>
@@ -40,7 +41,7 @@ class StockReceived extends React.Component {
     }
     addNewToData = () => {
         let copy = [...this.state.data];
-        copy.push({ category: "eggs", packing: "vacuum", product: "eggs", uom: 3, qty: 0 });
+        copy.push({ category: "eggs", packing: "vacuum", product: "eggs", uom: 3, qty: 0,reason:"" });
         this.setState({ data: copy });
     }
     setSelectValue = (e, index) => {
@@ -78,14 +79,17 @@ class StockReceived extends React.Component {
     }
     upDateToFirebase = () => {
         let data = { ...this.converArrayIntoObjectClassify(this.state.data) };
-        this.fetchFromFirebase("received", "hub1", (prevData) => {
-
-            prevData = prevData.received;
+        this.fetchFromFirebase("return", "hub1", (prevData) => {
+            console.log(prevData,prevData.return)
+            if(prevData.return===undefined)
+            prevData=[];
+            else
+            prevData = prevData.return;
             prevData.push({ data: data, date: this.state.date });
-            db.collection("return").doc("hub2").set({
+            db.collection("return").doc("hub1").set({
                 name: "hub1",
                 incharge: "X Men",
-                received: prevData
+                return: prevData
             })
         })
         this.updateInventory(data)
@@ -169,7 +173,7 @@ class StockReceived extends React.Component {
             let temp = this.props.category[e.target.value.toLowerCase()];
             console.log(this.props.classifyUom(e.target.value),e.target.value)
             for (let i = 0; i < temp.length; i++) {
-                dt.push({ category: e.target.value, product: temp[i], uom: this.props.classifyUom(e.target.value), qty: 0 });
+                dt.push({ category: e.target.value, product: temp[i], uom: this.props.classifyUom(e.target.value), qty: 0,reason:"" });
                 console.log(temp[i]);
             }
 

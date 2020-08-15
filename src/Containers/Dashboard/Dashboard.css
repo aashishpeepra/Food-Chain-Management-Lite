@@ -83,3 +83,11 @@
     font-size: 1.2rem;
     font-weight: bold;
 }
+.Dashboard-Controls{
+    margin:20px;
+}
+.Dashboard-Controls-Each select{
+    margin-top:10px;
+    padding:5px 10px;
+    font-size: 100%;
+}

@@ -3,22 +3,23 @@ import "./TableRender.css";
 
 class TableRender extends React.Component {
   render() {
+   
     return (
       <div className="table__container">
         <table>
           <thead>
             <tr>
               {this.props.data.headings.map((each) => {
-                return <th>{each}</th>;
+                return <th key={each}>{each}</th>;
               })}
             </tr>
           </thead>
           <tbody>
             {this.props.data.data.map((each) => {
               return (
-                <tr>
+                <tr key={each.subCategory}>
                   {Object.keys(each).map((per) => {
-                    return <td>{each[per]}</td>;
+                    return <td key={each[per]+Math.random()}>{each[per]}</td>;
                   })}
                 </tr>
               );
