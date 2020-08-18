@@ -15,17 +15,26 @@ class StockAvailable extends React.Component{
         if(!this.props.auth)
         this.props.history.push("/");
       }
-      componentDidMount(){
+      fetchData(){
           
-              db.collection("stock").doc("hub1").get()
+              db.collection("stock").doc(this.state.selectHub).get()
               .then(data=>{
                   console.log(data.data());
-                  this.setState({stock:data.data().stock});
+                  let answer=data.data();
+                  if(answer.stock===undefined)
+                  answer={};
+                  else
+                  answer=answer.stock;
+                  this.setState({stock:answer});
               })
          
       }
+      componentDidMount(){
+          this.fetchData();
+      }
     onSelectChange=(e)=>{
         this.setState({selectHub:e.target.value});
+        this.fetchData();
     }
     renderHub=(hub)=>{
         
@@ -48,10 +57,10 @@ class StockAvailable extends React.Component{
         return categoryPair;
     }
     render(){
-        console.log()
+        console.log(this.state.stock)
         return(
             <section id="Stock Available" className="StockAvailable">
-            <div style={{marginBottom:"20px;"}}>
+            <div style={{marginBottom:"20px"}}>
                     <h1>Stock Available</h1>
                 </div>
                 <div style={{margin:"30px"}}>
@@ -59,14 +68,16 @@ class StockAvailable extends React.Component{
                 </div>
             <div className="StockAvailable-select">
                 <h2>Select Store</h2>
-                <select onChange={this.onSelectChange}>
-                    <option defaultChecked value="hub1">Hub1</option>
-                    <option value="hub2">Hub2</option>
+                <select value={this.state.selectHub} onChange={this.onSelectChange}>
+                {this.props.allhubs.map(each=><option key={each.name} value={"hub"+each.value}>{each.name}</option>)}
          
                 </select>
             </div>
             <div>
-                {this.renderHub(this.state.stock).map(each=><Category data={each}/>)}
+                {
+                    Object.keys(this.state.stock).length===0? <h2>Stock Not Available</h2> : this.renderHub(this.state.stock).map(each=>{console.log(each);return <Category key={each.name} data={each}/>}) 
+                }
+                
             </div>
                 
             </section>

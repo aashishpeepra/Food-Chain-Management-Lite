@@ -34,7 +34,7 @@ class Aux extends React.Component {
         ) : null}
         <SideDrawer show={this.state.SideDrawerOpen} />
         {backdrop}
-        {React.cloneElement(this.props.children,{loggedIn:this.props.loggedIn})}
+        {React.cloneElement(this.props.children,{loggedIn:this.props.loggedIn,email:this.props.email,uid:this.props.uid})}
         {/* {this.props.children} */}
       </main>
     );
@@ -44,6 +44,8 @@ class Aux extends React.Component {
 const mapStateToProps = (state) => {
   return {
     loggedIn: state.loggedIn,
+    uid:state.uid,
+    email:state.email
   };
 };
 

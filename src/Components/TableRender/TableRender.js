@@ -17,7 +17,7 @@ class TableRender extends React.Component {
           <tbody>
             {this.props.data.data.map((each) => {
               return (
-                <tr key={each.subCategory}>
+                <tr key={each.subCategory+Math.random()}>
                   {Object.keys(each).map((per) => {
                     return <td key={each[per]+Math.random()}>{each[per]}</td>;
                   })}

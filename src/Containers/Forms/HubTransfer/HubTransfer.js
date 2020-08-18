@@ -205,9 +205,7 @@ class StockReceived extends React.Component {
                 <div className="transfer_select">
                   <h3>Transfer to hub</h3>
                   <select name="to"  onChange={this.forSelect}>
-                    <option value="hub1" >Hub1</option>
-                    <option value="hub2">Hub2</option>
-                    <option value="hub3">Hub3</option>
+        {this.props.allhubs.map(each=><option value={each.name} key={each.name}>{each.name}</option>)}
                   </select>
                 </div>
                 <div className="checkboxes">

@@ -40,7 +40,12 @@ function logout() {
 
 firebase.auth().onAuthStateChanged(firebaseUser => {
     if (firebaseUser) {
-        store.dispatch({type:"LOGIN__SUCCESS"})
+        console.log(firebaseUser.uid,firebaseUser.email,firebaseUser.displayName)
+        let data={
+            email:firebaseUser.email,
+            uid:firebaseUser.uid
+        }
+        store.dispatch({type:"LOGIN__SUCCESS",obj:data})
 
     }
     else {

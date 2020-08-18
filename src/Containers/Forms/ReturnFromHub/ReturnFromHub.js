@@ -37,7 +37,8 @@ class StockReceived extends React.Component {
     state = {
         data: [],
         date: new Date(),
-        selected: []
+        selected: [],
+        transfer:""
     }
     addNewToData = () => {
         let copy = [...this.state.data];
@@ -85,7 +86,7 @@ class StockReceived extends React.Component {
             prevData=[];
             else
             prevData = prevData.return;
-            prevData.push({ data: data, date: this.state.date });
+            prevData.push({ data: data, date: this.state.date,transfer:this.state.transfer });
             db.collection("return").doc("hub1").set({
                 name: "hub1",
                 incharge: "X Men",
@@ -206,10 +207,8 @@ class StockReceived extends React.Component {
                 </div>
                 <div className="transfer_select">
                   <h3>Select whom to return</h3>
-                  <select  onChange={this.forSelect}>
-                    <option value="hub1" >Hub1</option>
-                    <option value="hub2">Hub2</option>
-                    <option value="hub3">Hub3</option>
+                  <select value={this.state.transfer}  onChange={this.forSelect}>
+        {this.props.allhubs.map(each=><option value={each.name} key={each.name}>{each.name}</option>)}
                   </select>
                 </div>
                 <div className="checkboxes">

@@ -25,6 +25,7 @@ class Dashboard extends React.Component {
       headings: ["Category", "Product", "uom", "Quantity","Total"],
       data: [],
     },
+    hub:"hub1"
   };
   sortedForm=(data)=>{
     let copy=[...data];
@@ -89,7 +90,7 @@ class Dashboard extends React.Component {
     let temp={};
     temp[e.target.name]=e.target.value;
     let collection="";
-    let doc="hub1";
+    let doc=this.state.hub;
     let data="";
     let headers=["Category","Product","uom","Quantity","Total"];
     if(e.target.value==="stocka")
@@ -120,6 +121,9 @@ class Dashboard extends React.Component {
     this.generateValues(collection,doc,data,headers,e.target.value,false,e.target.value==="stocka")
     // this.setState(temp);
   }
+  onHubChange=(e)=>{
+    this.setState({hub:e.target.value});
+  }
   render() {
     return (
       <main>
@@ -144,7 +148,7 @@ class Dashboard extends React.Component {
             <div className="right__section">
               {this.sortedForm(this.state.data2).map((each) => {
                 return (
-                  <div className="each__box">
+                  <div key={each.colour} className="each__box">
                     <div
                       className="color__box"
                       style={{ backgroundColor: `${each.colour}` }}
@@ -153,7 +157,7 @@ class Dashboard extends React.Component {
                     </div>
                     <div className="value__box">
                       <div className="item__name">{each.name}</div>
-                      <div className="item__value">{each.value} Kg</div>
+                      <div className="item__value">{each.value} </div>
                     </div>
                   </div>
                 );
@@ -170,6 +174,12 @@ class Dashboard extends React.Component {
                   <option value="sales">Sales Entry</option>
                   <option value="stocka">Stock Available</option>
                   <option value="stockr">Stock Received</option>
+                </select>
+              </div>
+              <div className="Dashboard-Controls-Each">
+                <h3>Choose Hub</h3>
+                <select name="hub" >
+            {this.props.allhubs.map(each=><option value={"hub"+each.value} key={each.name}>{each.name}</option>)}
                 </select>
               </div>
         </div>

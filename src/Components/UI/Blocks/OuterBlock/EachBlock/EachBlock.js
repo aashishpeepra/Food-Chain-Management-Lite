@@ -9,7 +9,7 @@ export default (props)=>{
     return (
         <div className="Available-Each-Block">
             <p>{props.product}</p>
-            <span className={color[props.color]}>{props.qty} Kg</span>
+    <span className={color[props.color]}>{props.qty }</span>
             <p>Available</p>
         </div>
     )
