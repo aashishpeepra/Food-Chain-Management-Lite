@@ -8,7 +8,8 @@ import HubTransfer from "./Containers/Forms/HubTransfer/HubTransfer";
 import ReturnFromHub from "./Containers/Forms/ReturnFromHub/ReturnFromHub";
 import SalesEntry from "./Containers/Forms/SalesEntry/SalesEntry";
 import StockAvailable from "./Containers/Forms/StockAvailable/StockAvailable";
-import StockReceived from "./Containers/Forms/StockReceived/StockReceived";;
+import StockReceived from "./Containers/Forms/StockReceived/StockReceived";
+import Logout from "./Containers/Logout";
 
 export default class Router extends React.Component{
     state={
@@ -64,20 +65,25 @@ export default class Router extends React.Component{
     allHubs=()=>{
         return [{name:"Gachibowli",value:1},{name:"Hafeezpet",value:2},{name: "Kukatpally",value:3}, {name:"Secunderabad",value:4}, {name:"Balkampet",value:5}]
     }
+    returnNameFromEmail=()=>{
+        let copy=this.props.email;
+        console.log(copy.substring(0,copy.indexOf("@")))
+        return copy.substring(0,copy.indexOf("@"));
+    }
     render(){
         console.log(this.props)
         return (
             <Switch>
-                <Route path="/" exact render={(props)=><Login {...props} auth={this.props.loggedIn}/>}/>
-                
-                <Route path="/forms/carcass" render={(props)=><Carcass {...props} allhubs={this.allHubs()} classifyUom={this.classifyUom} uom={this.state.uom} category={this.state.data} auth={this.props.loggedIn}/>}/>
-                <Route path="/dashboard" render={(props)=><Dashboard {...props} classifyUom={this.classifyUom} allhubs={this.allHubs()} uom={this.state.uom} category={this.state.data} auth={this.props.loggedIn}/>}/>
-                <Route path="/forms/hubtransfer" render={(props)=><HubTransfer classifyUom={this.classifyUom} allhubs={this.allHubs()} uom={this.state.uom} category={this.state.data} {...props} auth={this.props.loggedIn}/>}/>
-                <Route path="/forms/deliverysla" render={(props)=><DeliverySLA classifyUom={this.classifyUom} allhubs={this.allHubs()} uom={this.state.uom} category={this.state.data} {...props} auth={this.props.loggedIn}/>}/>
-                <Route path="/forms/returnfromhub" render={(props)=><ReturnFromHub classifyUom={this.classifyUom} allhubs={this.allHubs()} uom={this.state.uom} category={this.state.data} {...props} auth={this.props.loggedIn}/>}/>
-                <Route path="/forms/salesentry" render={(props)=><SalesEntry classifyUom={this.classifyUom} allhubs={this.allHubs()} uom={this.state.uom} category={this.state.data} {...props} auth={this.props.loggedIn}/>}/>
-                <Route path="/forms/stockavailable" render={(props)=><StockAvailable classifyUom={this.classifyUom} allhubs={this.allHubs()} uom={this.state.uom} category={this.state.data} {...props} auth={this.props.loggedIn}/>}/>
-                <Route path="/forms/stockreceived" render={(props)=><StockReceived classifyUom={this.classifyUom} allhubs={this.allHubs()} uom={this.state.uom} category={this.state.data} {...props} auth={this.props.loggedIn}/>}/>
+                <Route path="/" exact render={(props)=><Login {...props}  auth={this.props.loggedIn}/>}/>
+                <Route path="/logout" exact render={(props)=><Logout {...props} email={this.returnNameFromEmail()} allhubs={this.allHubs()} classifyUom={this.classifyUom} uom={this.state.uom} category={this.state.data} auth={this.props.loggedIn}/>}/>
+                <Route path="/forms/carcass" render={(props)=><Carcass {...props} email={this.returnNameFromEmail()} allhubs={this.allHubs()} classifyUom={this.classifyUom} uom={this.state.uom} category={this.state.data} auth={this.props.loggedIn}/>}/>
+                <Route path="/dashboard" render={(props)=><Dashboard {...props} email={this.returnNameFromEmail()} classifyUom={this.classifyUom} allhubs={this.allHubs()} uom={this.state.uom} category={this.state.data} auth={this.props.loggedIn}/>}/>
+                <Route path="/forms/hubtransfer" render={(props)=><HubTransfer email={this.returnNameFromEmail()} classifyUom={this.classifyUom} allhubs={this.allHubs()} uom={this.state.uom} category={this.state.data} {...props} auth={this.props.loggedIn}/>}/>
+                <Route path="/forms/deliverysla" render={(props)=><DeliverySLA email={this.returnNameFromEmail()} classifyUom={this.classifyUom} allhubs={this.allHubs()} uom={this.state.uom} category={this.state.data} {...props} auth={this.props.loggedIn}/>}/>
+                <Route path="/forms/returnfromhub" render={(props)=><ReturnFromHub email={this.returnNameFromEmail()} classifyUom={this.classifyUom} allhubs={this.allHubs()} uom={this.state.uom} category={this.state.data} {...props} auth={this.props.loggedIn}/>}/>
+                <Route path="/forms/salesentry" render={(props)=><SalesEntry email={this.returnNameFromEmail()} classifyUom={this.classifyUom} allhubs={this.allHubs()} uom={this.state.uom} category={this.state.data} {...props} auth={this.props.loggedIn}/>}/>
+                <Route path="/forms/stockavailable" render={(props)=><StockAvailable email={this.returnNameFromEmail()} classifyUom={this.classifyUom} allhubs={this.allHubs()} uom={this.state.uom} category={this.state.data} {...props} auth={this.props.loggedIn}/>}/>
+                <Route path="/forms/stockreceived" render={(props)=><StockReceived email={this.returnNameFromEmail()} classifyUom={this.classifyUom} allhubs={this.allHubs()} uom={this.state.uom} category={this.state.data} {...props} auth={this.props.loggedIn}/>}/>
                 
             </Switch>
         )

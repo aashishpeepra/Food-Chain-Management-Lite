@@ -24,15 +24,15 @@ function loginUser(email, password, cb) {
 
         })
         .catch(err => {
-            alert('Check your email/ Password');
+            
             console.log(err.message);
         })
 }
 
 // logout
-function logout() {
+function logout(cb) {
     firebase.auth().signOut().then(res => {
-
+        cb();
     })
 }
 

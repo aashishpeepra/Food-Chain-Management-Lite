@@ -11,6 +11,7 @@ import {db} from "../../firebase";
 class Dashboard extends React.Component {
   state = {
     total:0,
+    date:new Date(),
     formType:"stocka",
     data2: [
       { name: "Chicken", colour: "Red", value: 55 },
@@ -25,7 +26,7 @@ class Dashboard extends React.Component {
       headings: ["Category", "Product", "uom", "Quantity","Total"],
       data: [],
     },
-    hub:"hub1"
+    hub:this.props.email
   };
   sortedForm=(data)=>{
     let copy=[...data];
@@ -39,11 +40,11 @@ class Dashboard extends React.Component {
     // this.props.history.push("/");
   }
   componentDidMount(){
-    this.generateValues("stock","hub1","stock",["Category","Product","uom","Quantity","Total"],"stocka",true,true)
+    this.generateValues("stock",this.props.email,"stock",["Category","Product","uom","Quantity","Total"],"stocka",true,true)
   }
   generateValues=(collection,doc,dataName,headers,temp,allow,isSales)=>{
     console.log(collection,doc,dataName,headers,temp,allow)
-    db.collection(collection).doc(doc).get()
+    db.collection(collection).doc(doc===""?this.props.email:doc).get()
     .then(data=>{
       let copy;
       if(isSales)
@@ -83,7 +84,7 @@ class Dashboard extends React.Component {
 
     })
     .catch(err=>{
-      alert("check your internet connection",err);
+      alert("No Data To Show",err);
     })
   }
   setSelect=(e)=>{
@@ -129,7 +130,7 @@ class Dashboard extends React.Component {
       <main>
         <h1 style={{ marginBottom: "30px" }}>Dashboard</h1>
         <div style={{margin:"20px"}}>
-        <TopInfo date={new Date()} hub="hub1" incharge="X Men" setDate={(dt)=>console.log(dt)}/>
+        <TopInfo date={this.state.date} hub={this.props.email} incharge="X Men" setDate={(e)=>this.setState({date:e})}/>
         </div>
         
         

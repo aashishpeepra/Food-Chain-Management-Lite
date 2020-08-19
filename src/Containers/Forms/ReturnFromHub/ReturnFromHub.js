@@ -80,15 +80,15 @@ class StockReceived extends React.Component {
     }
     upDateToFirebase = () => {
         let data = { ...this.converArrayIntoObjectClassify(this.state.data) };
-        this.fetchFromFirebase("return", "hub1", (prevData) => {
+        this.fetchFromFirebase("return", this.props.email, (prevData) => {
             console.log(prevData,prevData.return)
             if(prevData.return===undefined)
             prevData=[];
             else
             prevData = prevData.return;
             prevData.push({ data: data, date: this.state.date,transfer:this.state.transfer });
-            db.collection("return").doc("hub1").set({
-                name: "hub1",
+            db.collection("return").doc(this.props.email).set({
+                name: this.props.email,
                 incharge: "X Men",
                 return: prevData
             })
@@ -98,11 +98,15 @@ class StockReceived extends React.Component {
     }
     updateInventory = (data) => {
         console.log(data)
-        this.fetchFromFirebase("stock", "hub1", (prevData) => {
+        let stock22="";
+        let stock33="";
+        this.fetchFromFirebase("stock", this.props.email, (prevData) => {
             if (prevData === {}) {
                 alert("Stock not available");
             }
             else {
+                stock22=prevData.incharge;
+                stock33=prevData.name
                 let keys = Object.keys(data);
                 let stock = prevData.stock;
                 if (stock === undefined)
@@ -133,9 +137,9 @@ class StockReceived extends React.Component {
                     }
 
                 })
-                db.collection("stock").doc("hub1").set({
-                    name: "hub1",
-                    incharge: "X Men",
+                db.collection("stock").doc(this.props.email).set({
+                    name: stock33,
+                    incharge: stock22,
                     stock: stock
                 }).then(() => {
 
@@ -203,7 +207,7 @@ class StockReceived extends React.Component {
                     <h1>Return from hub</h1>
                 </div>
                 <div  style={{ margin: "30px" }}>
-                    <TopInfo hub={"hub1"} incharge={"X Men"} setDate={this.setDate} date={this.state.date} />
+                    <TopInfo hub={this.props.email} incharge={"X Men"} setDate={this.setDate} date={this.state.date} />
                 </div>
                 <div className="transfer_select">
                   <h3>Select whom to return</h3>

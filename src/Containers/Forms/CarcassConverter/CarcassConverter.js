@@ -20,7 +20,7 @@ function formGenerator(data, show, func) {
 class Dashboard extends React.Component {
     state = {
         categ:"mutton",
-        hub: "hub1",
+        hub: this.props.email,
         name: "",
         show: false,
         total: 0.0,
@@ -96,16 +96,17 @@ class Dashboard extends React.Component {
     }
     upDateToFirebase = () => {
         let data = { ...this.converArrayIntoObjectClassify(this.state.formRender.slice(1)) };
-        this.fetchFromFirebase("converter", "hub1", (prevData) => {
+        this.fetchFromFirebase("converter", this.props.email, (prevData) => {
 
-            
+            let ttp=prevData.name;
+            let ttp2=prevData.incharge;
             if(prevData.transfer===undefined)
             prevData=[];
             console.log("----->",data,this.state.formRender.slice(1));
             prevData.push({ data: data, date: this.state.date,total:this.state.total,wastage:this.state.total-this.state.formRender[0].qty });
-            db.collection("converter").doc("hub1").set({
-                name: "hub1",
-                incharge: "X Men",
+            db.collection("converter").doc(this.props.email).set({
+                name: ttp,
+                incharge: ttp2,
                 converter:prevData
             }).then(()=>{
                 alert("Form Submitted!");

@@ -39,6 +39,9 @@ const sideDrawer = (props) => {
         <div className="Options__Cart">
           <NavLink to="/forms/salesentry">Sales Entry</NavLink>
         </div>
+        <div className="Options__Cart">
+          <NavLink to="/logout">Logout</NavLink>
+        </div>
       
 
         

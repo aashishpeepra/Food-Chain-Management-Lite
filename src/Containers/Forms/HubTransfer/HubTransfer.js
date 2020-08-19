@@ -50,7 +50,7 @@ class StockReceived extends React.Component {
     }
     fetchFromFirebase = (collection, doc, cb) => {
         db.collection(collection).doc(doc).get().then(data => {
-            console.log(data.data());
+            console.log("====>>>>",data.data());
             cb(data.data());
         })
             .catch(err => {
@@ -78,15 +78,16 @@ class StockReceived extends React.Component {
     }
     upDateToFirebase = () => {
         let data = { ...this.converArrayIntoObjectClassify(this.state.data) };
-        this.fetchFromFirebase("transfer", "hub1", (prevData) => {
+        this.fetchFromFirebase("transfer", this.props.email, (prevData) => {
 
-            
+            let ttp=prevData.incharge;
+            let ttp2=prevData.name;
             if(prevData.transfer===undefined)
             prevData=[];
             prevData.push({ data: data, date: this.state.date,transferTo:this.state.to });
-            db.collection("transfer").doc("hub1").set({
-                name: "hub1",
-                incharge: "X Men",
+            db.collection("transfer").doc(this.props.email).set({
+                name: ttp2,
+                incharge:ttp ,
                 transfer: prevData
             })
         })
@@ -94,14 +95,18 @@ class StockReceived extends React.Component {
 
     }
     updateInventory = (data) => {
-        console.log(data)
-        this.fetchFromFirebase("stock", "hub1", (prevData) => {
+        console.log(data);
+        let incharge="";
+        let name="";
+        this.fetchFromFirebase("stock", this.props.email, (prevData) => {
             if (prevData === {}) {
                 alert("Stock not available");
             }
             else {
                 let keys = Object.keys(data);
                 let stock = prevData.stock;
+                incharge=prevData.incharge;
+                name=prevData.name
                 if (stock === undefined)
                     stock = {};
                 keys.forEach(element => {
@@ -130,9 +135,9 @@ class StockReceived extends React.Component {
                     }
 
                 })
-                db.collection("stock").doc("hub1").set({
-                    name: "hub1",
-                    incharge: "X Men",
+                db.collection("stock").doc(this.props.email).set({
+                    name: name,
+                    incharge: incharge,
                     stock: stock
                 }).then(() => {
 
@@ -200,7 +205,7 @@ class StockReceived extends React.Component {
                     <h1>Hub Transfer</h1>
                 </div>
                 <div  style={{ margin: "30px" }}>
-                    <TopInfo hub={"hub1"} incharge={"X Men"} setDate={this.setDate} date={this.state.date} />
+                    <TopInfo hub={this.props.email} incharge={"X Men"} setDate={this.setDate} date={this.state.date} />
                 </div>
                 <div className="transfer_select">
                   <h3>Transfer to hub</h3>

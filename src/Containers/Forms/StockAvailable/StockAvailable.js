@@ -7,7 +7,7 @@ import {db} from "../../../firebase"
 class StockAvailable extends React.Component{
     state={
         
-        selectHub:"hub1",
+        selectHub:this.props.email,
         stock:{},
         date:new Date()
     }

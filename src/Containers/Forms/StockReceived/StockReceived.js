@@ -52,6 +52,7 @@ class StockReceived extends React.Component {
         this.setState({ data: copy });
     }
     fetchFromFirebase = (collection, doc, cb) => {
+        alert(doc)
         db.collection(collection).doc(doc).get().then(data => {
             console.log(data.data());
             cb(data.data());
@@ -81,26 +82,37 @@ class StockReceived extends React.Component {
     }
     upDateToFirebase = () => {
         let data = { ...this.converArrayIntoObjectClassify(this.state.data) };
-        this.fetchFromFirebase("received", "hub1", (prevData) => {
-
+        let name,incharge;
+        
+        this.fetchFromFirebase("received", this.props.email, (prevData) => {
+            name=prevData.name;
+             incharge=prevData.incharge;
+             if(name===undefined)
+             name=this.props.email;
+             if(incharge===undefined)
+             incharge="Temp"
+             if(prevData.received!==undefined)
             prevData = prevData.received;
+            else
+            prevData=[];
             prevData.push({ data: data, date: this.state.date });
-            db.collection("received").doc("hub1").set({
-                name: "hub1",
-                incharge: "X Men",
+            db.collection("received").doc(this.props.email).set({
+                name: name,
+                incharge:incharge,
                 received: prevData
             })
         })
-        this.updateInventory(data)
+        this.updateInventory(data,name===undefined?this.props.email:name,incharge===undefined?"Temp":incharge)
 
     }
-    updateInventory = (data) => {
+    updateInventory = (data,name,incharge) => {
         console.log(data)
-        this.fetchFromFirebase("stock", "hub1", (prevData) => {
+        this.fetchFromFirebase("stock", name, (prevData) => {
             if (prevData === {}) {
                 alert("Stock not available");
             }
             else {
+                
                 let keys = Object.keys(data);
                 let stock = prevData.stock;
                 if (stock === undefined)
@@ -131,9 +143,9 @@ class StockReceived extends React.Component {
                     }
 
                 })
-                db.collection("stock").doc("hub1").set({
-                    name: "hub1",
-                    incharge: "X Men",
+                db.collection("stock").doc(name).set({
+                    name: name,
+                    incharge: incharge,
                     stock: stock
                 }).then(() => {
 
@@ -198,7 +210,7 @@ class StockReceived extends React.Component {
                     <h1>Stock Received</h1>
                 </div>
                 <div style={{ margin: "30px" }}>
-                    <TopInfo hub={"hub1"} incharge={"X Men"} setDate={this.setDate} date={this.state.date} />
+                    <TopInfo hub={this.props.email} incharge={"X Men"} setDate={this.setDate} date={this.state.date} />
                 </div>
                 <div className="checkboxes">
                     <fieldset>

@@ -76,8 +76,12 @@ class SalesEntry extends React.Component {
     }
     upDateToFirebase = () => {
         console.log("hERE")
+        let temp1,temp2;
+
         let data ={...this.converArrayIntoObjectClassify(this.state.data)};
-        this.fetchFromFirebase("entry", "hub1", (prevData) => {
+        this.fetchFromFirebase("entry", this.props.email, (prevData) => {
+            temp1=prevData.name;
+            temp2=prevData.incharge
             if (prevData.entry === undefined)
                 prevData = [];
             else
@@ -86,9 +90,9 @@ class SalesEntry extends React.Component {
 
             prevData.push({ data: data, date: this.state.date });
             console.log(prevData)
-            db.collection("entry").doc("hub1").set({
-                name: "hub1",
-                incharge: "X Men",
+            db.collection("entry").doc(this.props.email).set({
+                name: temp1,
+                incharge: temp2,
                 entry: prevData
             })
         })
@@ -97,12 +101,15 @@ class SalesEntry extends React.Component {
     }
     updateInventory = (data) => {
         console.log(data)
-        this.fetchFromFirebase("stock", "hub1", (prevData) => {
+        let name,inc;
+        this.fetchFromFirebase("stock", this.props.email, (prevData) => {
             if (prevData === {}) {
                 alert("Stock not available");
             }
             else {
                 let keys = Object.keys(data);
+                name=prevData.name;
+                inc=prevData.incharge
                 let stock = prevData.stock;
                 if (stock === undefined)
                     stock = {};
@@ -133,9 +140,9 @@ class SalesEntry extends React.Component {
                     }
 
                 })
-                db.collection("stock").doc("hub1").set({
-                    name:"hub1",
-                    incharge:"X Men",
+                db.collection("stock").doc(this.props.email).set({
+                    name:name,
+                    incharge:inc,
                     stock:stock
                 })
                 .then(()=>{

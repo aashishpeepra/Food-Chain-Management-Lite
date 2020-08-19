@@ -15,14 +15,17 @@ class Login extends React.Component {
     this.setState(keyPair);
   };
   redirectToDashboard = () => {
-    this.props.onLoginSuccess();
+    this.props.onLoginSuccess({email:this.state.email,uid:""});
     this.props.history.push("/dashboard");
   };
   logInFunc = () => {
     loginUser(this.state.email, this.state.password, this.redirectToDashboard);
   };
+  componentDidMount(){
+    if(this.props.auth)
+    this.props.history.push("/dashboard")
+  }
   componentWillReceiveProps(){
-    
     if(this.props.auth)
     this.props.history.push("/dashboard")
   }
@@ -68,7 +71,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onLoginSuccess: () => dispatch({ type: actionTypes.LOGIN__SUCCESS }),
+    onLoginSuccess: (e) => dispatch({ type: actionTypes.LOGIN__SUCCESS,obj:e }),
     onLogout: () => dispatch({ type: actionTypes.LOGOUT }),
   };
 };
