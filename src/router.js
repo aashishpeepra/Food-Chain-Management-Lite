@@ -62,7 +62,7 @@ export default class Router extends React.Component{
         return 1;
     }
     allHubs=()=>{
-        return [{name:"GACHIBOWLI",value:1},{name:"Hafeezpet",value:2},{name: "Kukatpally",value:3}, {name:"Secunderabad",value:4}, {name:"Balkampet",value:5}]
+        return [{name:"Gachibowli",value:1},{name:"Hafeezpet",value:2},{name: "Kukatpally",value:3}, {name:"Secunderabad",value:4}, {name:"Balkampet",value:5}]
     }
     render(){
         console.log(this.props)

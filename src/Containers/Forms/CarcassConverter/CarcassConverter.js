@@ -2,6 +2,7 @@ import React from 'react';
 import "./CarcassConverter.css";
 import TopInfo from "../../../Components/TopInfo/TopInfo";
 import Button from "../../../Components/Button/Button";
+import {db} from "../../../firebase"
 
 function formGenerator(data, show, func) {
 
@@ -58,7 +59,12 @@ class Dashboard extends React.Component {
       generateForm=(name)=>{
         let temp=[];
         let dt=[...this.props.category[name]]
-        
+        temp.push({
+            category:name,
+            product:"Wastage",
+            uom:2,
+            qty:0
+        })
         for(let i=0;i<dt.length;i++)
         {
             temp.push({
@@ -74,6 +80,50 @@ class Dashboard extends React.Component {
       upDateChoice=(e)=>{
           this.setState({categ:e.target.value,formRender:this.generateForm(e.target.value)});
       }
+      converArrayIntoObjectClassify = (data) => {
+        let result = {};
+        let data2 = [...data];
+        data2.forEach(element => {
+            let key = element["category"];
+            delete element["category"];
+            if (result[key] === undefined)
+                result[key] = [element]
+            else if (result[key].qty !== 0)
+                result[key].push(element);
+        });
+        console.log(result);
+        return result;
+    }
+    upDateToFirebase = () => {
+        let data = { ...this.converArrayIntoObjectClassify(this.state.formRender.slice(1)) };
+        this.fetchFromFirebase("converter", "hub1", (prevData) => {
+
+            
+            if(prevData.transfer===undefined)
+            prevData=[];
+            console.log("----->",data,this.state.formRender.slice(1));
+            prevData.push({ data: data, date: this.state.date,total:this.state.total,wastage:this.state.total-this.state.formRender[0].qty });
+            db.collection("converter").doc("hub1").set({
+                name: "hub1",
+                incharge: "X Men",
+                converter:prevData
+            }).then(()=>{
+                alert("Form Submitted!");
+                this.submitForm()
+            })
+        })
+
+    }
+    fetchFromFirebase = (collection, doc, cb) => {
+        db.collection(collection).doc(doc).get().then(data => {
+            console.log(data.data());
+            cb(data.data());
+        })
+            .catch(err => {
+                alert("Some Error Occured");
+                console.log('error while fetching', err, collection, doc);
+            })
+    }
     render() {
         return (
             <section id="CarCass_Converter">
@@ -121,7 +171,7 @@ class Dashboard extends React.Component {
                     {this.state.formRender.map((each, index) => formGenerator(each, this.state.show, (e) => this.changeFormAtIndex(e, index)))}
                 </div>
                 <div className="Carcass-button-holder">
-                    <Button value="Submit" func={this.submitForm} />
+                    <Button value="Submit" func={this.upDateToFirebase} />
                 </div>
             </section>
         )

@@ -21,7 +21,7 @@ class Login extends React.Component {
   logInFunc = () => {
     loginUser(this.state.email, this.state.password, this.redirectToDashboard);
   };
-  componentWillMount(){
+  componentWillReceiveProps(){
     
     if(this.props.auth)
     this.props.history.push("/dashboard")
