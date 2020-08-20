@@ -52,7 +52,7 @@ class StockReceived extends React.Component {
         this.setState({ data: copy });
     }
     fetchFromFirebase = (collection, doc, cb) => {
-        alert(doc)
+        
         db.collection(collection).doc(doc).get().then(data => {
             console.log(data.data());
             cb(data.data());
