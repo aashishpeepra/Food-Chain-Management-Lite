@@ -81,15 +81,15 @@ class StockReceived extends React.Component {
     upDateToFirebase = () => {
         let data = { ...this.converArrayIntoObjectClassify(this.state.data) };
         this.fetchFromFirebase("return", this.props.email, (prevData) => {
-            console.log(prevData,prevData.return)
+            const data22=[prevData.name,prevData.incharge]
             if(prevData.return===undefined)
             prevData=[];
             else
             prevData = prevData.return;
             prevData.push({ data: data, date: this.state.date,transfer:this.state.transfer });
             db.collection("return").doc(this.props.email).set({
-                name: this.props.email,
-                incharge: "X Men",
+                name: data22[0],
+                incharge: data22[1],
                 return: prevData
             })
         })
@@ -207,7 +207,7 @@ class StockReceived extends React.Component {
                     <h1>Return from hub</h1>
                 </div>
                 <div  style={{ margin: "30px" }}>
-                    <TopInfo hub={this.props.email} incharge={"X Men"} setDate={this.setDate} date={this.state.date} />
+                    <TopInfo hub={this.props.info.name} incharge={this.props.info.incharge} setDate={this.setDate} date={this.state.date} />
                 </div>
                 <div className="transfer_select">
                   <h3>Select whom to return</h3>

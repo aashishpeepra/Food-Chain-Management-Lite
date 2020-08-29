@@ -130,7 +130,7 @@ class Dashboard extends React.Component {
       <main>
         <h1 style={{ marginBottom: "30px" }}>Dashboard</h1>
         <div style={{margin:"20px"}}>
-        <TopInfo date={this.state.date} hub={this.props.email} incharge="X Men" setDate={(e)=>this.setState({date:e})}/>
+        <TopInfo date={this.state.date} hub={this.props.info.name} incharge={this.props.info.incharge} setDate={(e)=>this.setState({date:e})}/>
         </div>
         
         

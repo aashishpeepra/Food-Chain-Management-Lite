@@ -132,7 +132,7 @@ class Dashboard extends React.Component {
                     <h1>Carcass Converter</h1>
                 </div>
                 <div style={{margin:"30px"}}>
-                    <TopInfo date={this.state.date}/>
+                    <TopInfo date={this.state.date} hub={this.props.info.name} incharge={this.props.info.incharge}/>
                 </div>
                 <div className="Carcass-converter-option">
                     <div className="Carcass-converter-option-div">

@@ -208,7 +208,7 @@ class SalesEntry extends React.Component {
                     <h1>Sales Entry</h1>
                 </div>
                 <div style={{ margin: "30px" }}>
-                    <TopInfo onChange={this.setDate} date={this.state.date} />
+                    <TopInfo onChange={this.setDate} date={this.state.date} hub={this.props.info.name} incharge={this.props.info.incharge} />
                 </div>
                 <div className="checkboxes">
                     <fieldset>

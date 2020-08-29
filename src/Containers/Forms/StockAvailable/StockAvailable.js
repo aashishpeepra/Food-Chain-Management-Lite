@@ -64,7 +64,7 @@ class StockAvailable extends React.Component{
                     <h1>Stock Available</h1>
                 </div>
                 <div style={{margin:"30px"}}>
-                    <TopInfo date={this.state.date} />
+                    <TopInfo date={this.state.date} hub={this.props.info.name} incharge={this.props.info.incharge} />
                 </div>
             <div className="StockAvailable-select">
                 <h2>Select Store</h2>

@@ -205,7 +205,7 @@ class StockReceived extends React.Component {
                     <h1>Hub Transfer</h1>
                 </div>
                 <div  style={{ margin: "30px" }}>
-                    <TopInfo hub={this.props.email} incharge={"X Men"} setDate={this.setDate} date={this.state.date} />
+                    <TopInfo hub={this.props.info.name} incharge={this.props.info.incharge} setDate={this.setDate} date={this.state.date} />
                 </div>
                 <div className="transfer_select">
                   <h3>Transfer to hub</h3>
